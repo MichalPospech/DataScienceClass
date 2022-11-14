@@ -51,5 +51,10 @@
 	"remoteUser": "vscode",
 	"features": {
 		"git": "os-provided"
-	}
+	},
+	"extensions": [
+		"ms-toolsai.jupyter",
+		"ms-python.python",
+		"ms-python.vscode-pylance"
+	]
 }
