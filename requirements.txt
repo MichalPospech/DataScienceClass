@@ -3,3 +3,6 @@ altair
 matplotlib
 seaborn 
 pandas-profiling 
+jupyterlab
+ipywidgets
+seaborn

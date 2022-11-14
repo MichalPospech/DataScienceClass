@@ -2,23 +2,23 @@
 
 ## Popis
 
-Jedná o sadu dat, které udávají za jednotlivé obce Èeské republiky rùzné typy sociodemografickıch údajù:
+JednÃ¡ o sadu dat, kterÃ© udÃ¡vajÃ­ za jednotlivÃ© obce ÄŒeskÃ© republiky rÅ¯znÃ© typy sociodemografickÃ½ch ÃºdajÅ¯:
 
-* vybrané vısledky sèítání lidu 2011 a 2021
-* poèet obyvatel celkem a v rùznıch sociodemografickıch skupinách
-* vıskyt vybranıch trestnıch èinù na území obce
-* podíl osob v bankrotu èi exekuci na území obce
-* vybrané vısledky parlamentních (2017, 2021) a prezidentskıch (2018) voleb
+* vybranÃ© vÃ½sledky sÄÃ­tÃ¡nÃ­ lidu 2011 a 2021
+* poÄet obyvatel celkem a v rÅ¯znÃ½ch sociodemografickÃ½ch skupinÃ¡ch
+* vÃ½skyt vybranÃ½ch trestnÃ½ch ÄinÅ¯ na ÃºzemÃ­ obce
+* podÃ­l osob v bankrotu Äi exekuci na ÃºzemÃ­ obce
+* vybranÃ© vÃ½sledky parlamentnÃ­ch (2017, 2021) a prezidentskÃ½ch (2018) voleb
 
-Z uvedenıch údajù je spoèteno tzv. skóre rizikovosti obce z pohledu nespácení závazkù.
+Z uvedenÃ½ch ÃºdajÅ¯ je spoÄteno tzv. skÃ³re rizikovosti obce z pohledu nespÃ¡cenÃ­ zÃ¡vazkÅ¯.
 
 ## Sekce
 
-Kadá sekce má samostatnı soubor s popisem dat.
+KaÅ¾dÃ¡ sekce mÃ¡ samostatnÃ½ soubor s popisem dat.
 
-* census11_21: vybrané vısledky sèítání lidu
-* kriminalita: vıskyt vybrané trestné èinnosti
-* score: skóre rizikovosti obce
-* volby: vısledky parlamentních a prezidentskıch voleb, zastoupení vybranıch sociodemografickıch skupin
+* census11_21: vybranÃ© vÃ½sledky sÄÃ­tÃ¡nÃ­ lidu
+* kriminalita: vÃ½skyt vybranÃ© trestnÃ© Äinnosti
+* score: skÃ³re rizikovosti obce
+* volby: vÃ½sledky parlamentnÃ­ch a prezidentskÃ½ch voleb, zastoupenÃ­ vybranÃ½ch sociodemografickÃ½ch skupin
 
-Vybraná data za obce jsou dále agregována v souboru obce_agregace.csv.
+VybranÃ¡ data za obce jsou dÃ¡le agregovÃ¡na v souboru obce_agregace.csv.

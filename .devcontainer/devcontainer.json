@@ -37,7 +37,8 @@
 			"extensions": [
 				"ms-python.python",
 				"ms-python.vscode-pylance",
-				"quarto.quarto"
+				"quarto.quarto",
+				"ms-toolsai.jupyter"
 			]
 		}
 	},

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.269">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Michal Pospěch">
+
+<title>NDBI048 - GeoData - EDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="EDA_report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="EDA_report_files/libs/quarto-html/quarto.js"></script>
+<script src="EDA_report_files/libs/quarto-html/popper.min.js"></script>
+<script src="EDA_report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="EDA_report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="EDA_report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="EDA_report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="EDA_report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="EDA_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="EDA_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NDBI048 - <code>GeoData</code> - EDA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Michal Pospěch </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This document analyses data from the “Geodata” dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling election results from - past election results and - sociodemigraphic data.</p>
+</section>
+<section id="dataset" class="level1">
+<h1>Dataset</h1>
+<p>This dataset contains election-district level sociodemographic data and election results. Fortunately the dataset is complete and contains no duplicities in data thus no cleaning has to be done. The dataset contains 14271 rows and 51 columns, each row representing one electoral district.</p>
+<section id="columns" class="level2">
+<h2 class="anchored" data-anchor-id="columns">Columns</h2>
+<p>Meaning of each column is described in the provided file and is as follows:</p>
+<ul>
+<li><code>obec_okrsek</code> - district and municipality code, is unique and is used as index</li>
+<li><code>obec</code> - municipality (LAU2) code</li>
+<li><code>okres</code> - county (LAU1)</li>
+<li><code>kraj</code> - region (NUTS3)</li>
+<li><code>vel.obce</code> - number of inhabitants</li>
+<li><code>par{21,17}vsezn</code> - Parlimentary elections 2021/17, number of votes from the “electoral list”</li>
+<li><code>par{21,17}phcelkem</code> - Parlimentary elections 2021/17, number of votes in district</li>
+<li><code>par{21,17}*</code> - Parlimentary elections 2021/17, number of votes for a particular party</li>
+<li><code>prez18zem2</code> - Presidential elections 2018, 2nd round, number of votes for M. Zeman</li>
+<li><code>prez18dra2</code> - Presidential elections 2018, 2nd round, number of votes for J. Drahos</li>
+<li><code>nazev_obce</code> - municipality name</li>
+<li><code>nazev.pha</code> - city name (same as <code>nazev_obce</code> for non-statutary cities)</li>
+<li><code>sl11obyvatel</code> - Census 2011, number of inhabitants</li>
+<li><code>sl11muzi</code> - Census 2011, number of men</li>
+<li><code>sl11rozv</code> - Census 2011, divorced</li>
+<li><code>sl11deti</code> - Census 2011, children</li>
+<li><code>sl11seni</code> - Census 2011, pensioners</li>
+<li><code>sl11kat</code> - Census 2011, catholics</li>
+<li><code>sl11rom</code> - Census 2011, roma</li>
+<li><code>sl11vs</code> - Census 2011, university education</li>
+<li><code>sl11vos</code> - Census 2011, vocational school</li>
+<li><code>sl11nast</code> - Census 2011, extended high school</li>
+<li><code>sl11strm</code> - Census 2011, high school with maturita</li>
+<li><code>sl11strb</code> - Census 2011, high school without maturita</li>
+<li><code>sl11zakl</code> - Census 2011, elementary school</li>
+<li><code>sl11zam</code> - Census 2011, employed</li>
+<li><code>sl11pod</code> - Census 2011, enterpreneur</li>
+<li><code>sl11nezam</code> - Census 2011, unemployed</li>
+<li><code>sl11neprduch</code> - Census 2011, non-working pensioners</li>
+<li><code>sl11budov</code> - Census 2011, number of buildings</li>
+</ul>
+</section>
+<section id="feature-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h2>
+<p>Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also number of women was not provided and had to be calculated as <code>total</code> - <code>men</code>.</p>
+</section>
+<section id="exploration" class="level2">
+<h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
+<p>We start with exploring the various sociodemogaphic indicators provided.</p>
+<div class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<p><img src="EDA_report_files/figure-html/cell-3-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.</p>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<p><img src="EDA_report_files/figure-html/cell-4-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.</p>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+<p><img src="EDA_report_files/figure-html/cell-5-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.</p>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<p><img src="EDA_report_files/figure-html/cell-6-output-1.svg" class="img-fluid"></p>
+</div>
+</div>
+<p>In 2017 ANO won the elections by a huge margin, while in 2021 they’ve won as well but with much smaller lead.</p>
+<section id="relationships" class="level3">
+<h3 class="anchored" data-anchor-id="relationships">Relationships</h3>
+<p>First, let’s explore how does size of municipality influence election results.</p>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -1,0 +1,92 @@
+---
+title: "NDBI048 - `GeoData` - EDA"
+author: "Michal Pospěch"
+execute:
+  echo: false
+jupyter: python3
+---
+
+# Introduction
+This document analyses data from the "Geodata" dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling election results from 
+ - past election results and
+ - sociodemigraphic data.
+
+# Dataset
+This dataset contains election-district level sociodemographic data and election results. Fortunately the dataset is complete and contains no duplicities in data thus no cleaning has to be done. 
+The dataset contains 14271 rows and 51 columns, each row representing one electoral district.
+
+```{python}
+import scripts
+%matplotlib inline
+import matplotlib_inline
+matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
+df = scripts.load_extended_dataset("./data/volby/dataset_extended.csv")
+
+```
+## Columns 
+Meaning of each column is described in the provided file and is as follows:
+
+ - `obec_okrsek` - district and municipality code, is unique and is used as index
+ - `obec` - municipality (LAU2) code
+ - `okres` - county (LAU1)
+ - `kraj` - region (NUTS3)
+ - `vel.obce` - number of inhabitants
+ - `par{21,17}vsezn` - Parlimentary elections 2021/17, number of votes from the "electoral list"
+ - `par{21,17}phcelkem` - Parlimentary elections 2021/17, number of votes in district
+ - `par{21,17}*` - Parlimentary elections 2021/17, number of votes for a particular party
+ - `prez18zem2` - Presidential elections 2018, 2nd round, number of votes for M. Zeman
+ - `prez18dra2` - Presidential elections 2018, 2nd round, number of votes for J. Drahos
+ - `nazev_obce` - municipality name
+ - `nazev.pha` - city name (same as `nazev_obce` for non-statutary cities)
+ - `sl11obyvatel` - Census 2011, number of inhabitants 
+ - `sl11muzi` - Census 2011, number of men
+ - `sl11rozv` - Census 2011, divorced
+ - `sl11deti` - Census 2011, children
+ - `sl11seni` - Census 2011, pensioners
+ - `sl11kat` - Census 2011, catholics
+ - `sl11rom` - Census 2011, roma
+ - `sl11vs` - Census 2011, university education
+ - `sl11vos` - Census 2011, vocational school
+ - `sl11nast` - Census 2011, extended high school
+ - `sl11strm` - Census 2011, high school with maturita
+ - `sl11strb` - Census 2011, high school without maturita
+ - `sl11zakl` - Census 2011, elementary school
+ - `sl11zam` - Census 2011, employed
+ - `sl11pod` - Census 2011, enterpreneur
+ - `sl11nezam` - Census 2011, unemployed
+ - `sl11neprduch` - Census 2011, non-working pensioners
+ - `sl11budov` - Census 2011, number of buildings
+
+## Feature Extraction
+
+Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also number of women was not provided and had to be calculated as `total` - `men`.
+
+## Exploration
+
+We start with exploring the various sociodemogaphic indicators provided. 
+```{python}
+scripts.plot_gender_counts(df);
+
+```
+The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.
+```{python}
+scripts.plot_municipality_size_ratio(df);
+
+```
+One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.
+
+```{python}
+scripts.plot_edu_count(df);
+
+```
+Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.
+
+```{python}
+scripts.plot_parl_elections(df);
+
+```
+In 2017 ANO won the elections by a huge margin, while in 2021 they've won as well but with much smaller lead.
+
+### Relationships
+
+First, let's explore how does size of municipality influence election results.
