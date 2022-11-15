@@ -3,6 +3,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import seaborn.objects as so
 
+base_size = (8,6)
+
 theme = {
     "context": "notebook",
     "style": "darkgrid",
@@ -39,8 +41,22 @@ def plot_edu_count(df: pd.DataFrame):
             "High w/o m.",
             "Elementary",
         ],
-    ).label(title="Ratio of inhabitants with a particular level of education")
+    ).label(title="Ratio of inhabitants with a particular level of education").layout(size=base_size)
 
+
+
+def get_employment_graphs(df):
+    return box_cross_size_plot(df,"sl11obyvatel",{
+        "sl11zam": "Employee",
+        "sl11pod": "Enterpreneur",
+        "sl11nezam": "Unemployed",
+        "sl11neprduch": "Retired",
+    }).label(
+            x="Ratio",
+            y="Municipality size",
+            title="Employment status by municipality size",
+            color="Employment status",
+        ).limit(x=(0,1.0)).theme(object_theme)
 
 def plot_municipality_size_ratio(df: pd.DataFrame):
     counts = df.groupby("vel.obce_cat")["sl11obyvatel"].sum()[[
