@@ -9,7 +9,7 @@ jupyter: python3
 # Introduction
 This document analyses data from the "Geodata" dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling election results from 
  - past parlimentary election results and
- - sociodemigraphic data.
+ - sociodemographic data.
 
 # Dataset
 This dataset contains election-district level sociodemographic data and election results. Fortunately the dataset is complete and contains no duplicities in data thus no cleaning has to be done. 
@@ -126,7 +126,9 @@ scripts.education_size_plot(df)
  
 Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.
 
-Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.
+Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.
+
+
 
 First we explore the 2017 elections.
 
