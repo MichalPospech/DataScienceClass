@@ -34,6 +34,9 @@ ul.task-list li input[type="checkbox"] {
 <script src="EDA_report_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="EDA_report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="EDA_report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -106,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
 <li><code>sl11zam</code> - Census 2011, employed</li>
 <li><code>sl11pod</code> - Census 2011, enterpreneur</li>
 <li><code>sl11nezam</code> - Census 2011, unemployed</li>
-<li><code>sl11neprduch</code> - Census 2011, non-working pensioners</li>
+<li><code>sl11neprduch</code> - Census 2011, non-working pensioners (retired)</li>
 <li><code>sl11budov</code> - Census 2011, number of buildings</li>
 </ul>
 </section>
@@ -118,37 +121,531 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
 <p>We start with exploring the various sociodemogaphic indicators provided.</p>
 <div class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="14">
-<p><img src="EDA_report_files/figure-html/cell-3-output-1.png" width="599" height="445"></p>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<p><img src="EDA_report_files/figure-html/cell-3-output-1.png" width="654" height="465"></p>
 </div>
 </div>
 <p>The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.</p>
 <div class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="15">
-<p><img src="EDA_report_files/figure-html/cell-4-output-1.png" width="599" height="445"></p>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<p><img src="EDA_report_files/figure-html/cell-4-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.</p>
 <div class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="16">
-<p><img src="EDA_report_files/figure-html/cell-5-output-1.png" width="753" height="561"></p>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p><img src="EDA_report_files/figure-html/cell-5-output-1.png" width="657" height="465"></p>
 </div>
 </div>
 <p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.</p>
 <div class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="17">
-<p><img src="EDA_report_files/figure-html/cell-6-output-1.png" width="598" height="445"></p>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p><img src="EDA_report_files/figure-html/cell-6-output-1.png" width="656" height="465"></p>
+</div>
+</div>
+<p>It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.</p>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<p><img src="EDA_report_files/figure-html/cell-7-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.</p>
-<div class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="18">
-<p><img src="EDA_report_files/figure-html/cell-7-output-1.png" width="599" height="445"></p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<p><img src="EDA_report_files/figure-html/cell-8-output-1.png" width="657" height="465"></p>
 </div>
 </div>
-<p>In 2021 ANO won the elections as well, however with much smaller margin only 4 parties (and coallitions) got into the Chamber of Deputies. ### Relationships</p>
-<p>First, let’s explore how does size of municipality influence election results.</p>
-<p>Then let’s explore the proportion of education level in municipalities of different sizes.</p>
+<p>In 2021 ANO won the elections as well, however with much smaller margin only 4 parties (and coallitions) got into the Chamber of Deputies.</p>
+<section id="relationships" class="level3">
+<h3 class="anchored" data-anchor-id="relationships">Relationships</h3>
+<p>To understand election results better let’s explore how they relate to other variables. First, let’s explore how does size of municipality influence election results.</p>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<p><img src="EDA_report_files/figure-html/cell-9-output-1.png" width="789" height="465"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<p><img src="EDA_report_files/figure-html/cell-10-output-1.png" width="783" height="465"></p>
+</div>
+</div>
+<p>Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) doing disproportionately well in bigger cities.</p>
+<p>To gain more insight into this result, let’s see how does size of municipality relate to education and employment distribution.</p>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+<p><img src="EDA_report_files/figure-html/cell-11-output-1.png" width="835" height="465"></p>
+</div>
+</div>
+<p>Clearly, the distribution of employment does not vary very much between different sizes of municipalities.</p>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="11">
+<p><img src="EDA_report_files/figure-html/cell-12-output-1.png" width="853" height="465"></p>
+</div>
+</div>
+<p>Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.</p>
+<p>Now, let’s explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.</p>
+<p>First we explore the 2017 elections.</p>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="12">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Men</th>
+      <th>Divorced</th>
+      <th>Children</th>
+      <th>Pensioners</th>
+      <th>Catholic</th>
+      <th>Roma</th>
+      <th>University</th>
+      <th>Vocational</th>
+      <th>Extended high school</th>
+      <th>High school with maturita</th>
+      <th>High school without maturita</th>
+      <th>Elementary school</th>
+      <th>Employees</th>
+      <th>Enterpreneurs</th>
+      <th>Unemployed</th>
+      <th>Retired</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ANO</th>
+      <td>0.041093</td>
+      <td>0.026135</td>
+      <td>0.034524</td>
+      <td>-0.022401</td>
+      <td>-0.159647</td>
+      <td>-0.009232</td>
+      <td>-0.377577</td>
+      <td>-0.243306</td>
+      <td>-0.133087</td>
+      <td>-0.185962</td>
+      <td>0.337919</td>
+      <td>0.246680</td>
+      <td>-0.134646</td>
+      <td>-0.330366</td>
+      <td>0.155623</td>
+      <td>0.124068</td>
+    </tr>
+    <tr>
+      <th>ODS</th>
+      <td>-0.060295</td>
+      <td>0.077424</td>
+      <td>-0.027001</td>
+      <td>-0.003415</td>
+      <td>-0.176227</td>
+      <td>-0.024944</td>
+      <td>0.484473</td>
+      <td>0.274207</td>
+      <td>0.243706</td>
+      <td>0.358873</td>
+      <td>-0.453015</td>
+      <td>-0.416512</td>
+      <td>0.245244</td>
+      <td>0.405183</td>
+      <td>-0.270931</td>
+      <td>-0.174787</td>
+    </tr>
+    <tr>
+      <th>TOP09</th>
+      <td>-0.056719</td>
+      <td>0.163635</td>
+      <td>-0.061479</td>
+      <td>-0.071983</td>
+      <td>-0.214413</td>
+      <td>-0.023842</td>
+      <td>0.449711</td>
+      <td>0.312683</td>
+      <td>0.216965</td>
+      <td>0.334843</td>
+      <td>-0.425833</td>
+      <td>-0.402878</td>
+      <td>0.276777</td>
+      <td>0.318843</td>
+      <td>-0.212106</td>
+      <td>-0.240309</td>
+    </tr>
+    <tr>
+      <th>SPD</th>
+      <td>0.056423</td>
+      <td>0.110595</td>
+      <td>0.093404</td>
+      <td>-0.150424</td>
+      <td>-0.037560</td>
+      <td>0.000987</td>
+      <td>-0.316076</td>
+      <td>-0.205852</td>
+      <td>-0.168482</td>
+      <td>-0.246670</td>
+      <td>0.249080</td>
+      <td>0.268286</td>
+      <td>-0.131381</td>
+      <td>-0.203303</td>
+      <td>0.312336</td>
+      <td>-0.038341</td>
+    </tr>
+    <tr>
+      <th>KSČM</th>
+      <td>0.077569</td>
+      <td>-0.039317</td>
+      <td>-0.022018</td>
+      <td>0.081557</td>
+      <td>-0.033460</td>
+      <td>0.095163</td>
+      <td>-0.405961</td>
+      <td>-0.236990</td>
+      <td>-0.231511</td>
+      <td>-0.351982</td>
+      <td>0.376581</td>
+      <td>0.398431</td>
+      <td>-0.269806</td>
+      <td>-0.270776</td>
+      <td>0.241618</td>
+      <td>0.223969</td>
+    </tr>
+    <tr>
+      <th>ČSSD</th>
+      <td>-0.056563</td>
+      <td>-0.036474</td>
+      <td>-0.086778</td>
+      <td>0.138584</td>
+      <td>0.135655</td>
+      <td>0.022344</td>
+      <td>-0.128071</td>
+      <td>-0.070846</td>
+      <td>-0.024863</td>
+      <td>-0.072048</td>
+      <td>0.146026</td>
+      <td>0.146079</td>
+      <td>-0.118196</td>
+      <td>-0.212407</td>
+      <td>0.031467</td>
+      <td>0.196440</td>
+    </tr>
+    <tr>
+      <th>KDU</th>
+      <td>0.005917</td>
+      <td>-0.376418</td>
+      <td>0.036371</td>
+      <td>0.087908</td>
+      <td>0.772638</td>
+      <td>-0.031583</td>
+      <td>-0.001044</td>
+      <td>-0.026492</td>
+      <td>-0.047736</td>
+      <td>-0.033789</td>
+      <td>0.072947</td>
+      <td>0.063060</td>
+      <td>-0.058209</td>
+      <td>-0.014486</td>
+      <td>-0.049097</td>
+      <td>0.091310</td>
+    </tr>
+    <tr>
+      <th>Piráti</th>
+      <td>-0.106459</td>
+      <td>0.153778</td>
+      <td>-0.086571</td>
+      <td>0.008118</td>
+      <td>-0.173483</td>
+      <td>-0.018851</td>
+      <td>0.603053</td>
+      <td>0.346914</td>
+      <td>0.257751</td>
+      <td>0.341346</td>
+      <td>-0.549818</td>
+      <td>-0.461539</td>
+      <td>0.232575</td>
+      <td>0.385660</td>
+      <td>-0.237762</td>
+      <td>-0.197837</td>
+    </tr>
+    <tr>
+      <th>STAN</th>
+      <td>0.043754</td>
+      <td>-0.074612</td>
+      <td>0.069653</td>
+      <td>-0.022076</td>
+      <td>-0.091907</td>
+      <td>-0.012162</td>
+      <td>-0.041547</td>
+      <td>0.029837</td>
+      <td>0.004995</td>
+      <td>0.013866</td>
+      <td>0.023435</td>
+      <td>-0.046621</td>
+      <td>0.055114</td>
+      <td>0.150077</td>
+      <td>-0.102341</td>
+      <td>-0.031299</td>
+    </tr>
+    <tr>
+      <th>Zelení</th>
+      <td>-0.093035</td>
+      <td>0.169291</td>
+      <td>-0.064333</td>
+      <td>-0.005738</td>
+      <td>-0.121956</td>
+      <td>0.013135</td>
+      <td>0.309264</td>
+      <td>0.164134</td>
+      <td>0.153460</td>
+      <td>0.166509</td>
+      <td>-0.318216</td>
+      <td>-0.199423</td>
+      <td>0.078574</td>
+      <td>0.099264</td>
+      <td>-0.064751</td>
+      <td>-0.104194</td>
+    </tr>
+    <tr>
+      <th>Svobodní</th>
+      <td>-0.023903</td>
+      <td>0.073551</td>
+      <td>-0.013907</td>
+      <td>-0.052158</td>
+      <td>-0.076574</td>
+      <td>-0.003160</td>
+      <td>0.188474</td>
+      <td>0.112741</td>
+      <td>0.099864</td>
+      <td>0.152538</td>
+      <td>-0.182123</td>
+      <td>-0.171662</td>
+      <td>0.143632</td>
+      <td>0.101791</td>
+      <td>-0.067057</td>
+      <td>-0.123317</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Clearly ANO’s support is negatively correlated with higher education and income (employees and enterpreneurs) and positively with lower education and having income from the state (pensioners and unemployed).</p>
+<p>ODS has an inverse correlation profile to ANO. Its support is positively correlated with higher education and being employed or self-employed.</p>
+<p>Piráti are similar to ODS, they have extremely high positive correlation with higher education .</p>
+<p>KDU has extremely high correlation with catholics which is to be expected given their name. It also has negative correlation with divorced which is to be expected as well.</p>
+<p>SPD has strong negative correlation with higher education, and positive correlation with lower education and the unemployed.</p>
+<p>ČSSD has strong positive correlations with unemployed, retired and pensioners and slightly weaker with lower education.</p>
+<p>TOP09 has similar correlations as the Piráti do.</p>
+<p>STAN has no strong correlations.</p>
+<p>KSČM is similar to SPD and ANO, high positive correlation with lower education, unemployed and pensioners.</p>
+<hr>
+<p>Now let’s continue with 2021</p>
+<div class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="13">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Men</th>
+      <th>Divorced</th>
+      <th>Children</th>
+      <th>Pensioners</th>
+      <th>Catholic</th>
+      <th>Roma</th>
+      <th>University</th>
+      <th>Vocational</th>
+      <th>Extended high school</th>
+      <th>High school with maturita</th>
+      <th>High school without maturita</th>
+      <th>Elementary school</th>
+      <th>Employees</th>
+      <th>Enterpreneurs</th>
+      <th>Unemployed</th>
+      <th>Retired</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>ANO</th>
+      <td>0.026442</td>
+      <td>0.051146</td>
+      <td>-0.047361</td>
+      <td>0.046547</td>
+      <td>-0.081730</td>
+      <td>0.013006</td>
+      <td>-0.452431</td>
+      <td>-0.295502</td>
+      <td>-0.193292</td>
+      <td>-0.298261</td>
+      <td>0.401549</td>
+      <td>0.401381</td>
+      <td>-0.254452</td>
+      <td>-0.392238</td>
+      <td>0.270456</td>
+      <td>0.228655</td>
+    </tr>
+    <tr>
+      <th>SPOLU</th>
+      <td>-0.068907</td>
+      <td>-0.102858</td>
+      <td>-0.004362</td>
+      <td>0.019090</td>
+      <td>0.170040</td>
+      <td>-0.052567</td>
+      <td>0.545203</td>
+      <td>0.319039</td>
+      <td>0.235047</td>
+      <td>0.381081</td>
+      <td>-0.463490</td>
+      <td>-0.456651</td>
+      <td>0.280439</td>
+      <td>0.421382</td>
+      <td>-0.341239</td>
+      <td>-0.176274</td>
+    </tr>
+    <tr>
+      <th>SPD</th>
+      <td>0.086952</td>
+      <td>0.063883</td>
+      <td>0.120553</td>
+      <td>-0.139951</td>
+      <td>-0.045735</td>
+      <td>0.006285</td>
+      <td>-0.407685</td>
+      <td>-0.274051</td>
+      <td>-0.229957</td>
+      <td>-0.324757</td>
+      <td>0.336282</td>
+      <td>0.328679</td>
+      <td>-0.180576</td>
+      <td>-0.270981</td>
+      <td>0.329921</td>
+      <td>-0.004193</td>
+    </tr>
+    <tr>
+      <th>PirSTAN</th>
+      <td>-0.041088</td>
+      <td>0.154745</td>
+      <td>-0.025443</td>
+      <td>-0.044650</td>
+      <td>-0.211783</td>
+      <td>0.044363</td>
+      <td>0.449300</td>
+      <td>0.299782</td>
+      <td>0.231306</td>
+      <td>0.308247</td>
+      <td>-0.452142</td>
+      <td>-0.382403</td>
+      <td>0.206558</td>
+      <td>0.316712</td>
+      <td>-0.195133</td>
+      <td>-0.212952</td>
+    </tr>
+    <tr>
+      <th>Přísaha</th>
+      <td>0.023864</td>
+      <td>-0.072731</td>
+      <td>0.041022</td>
+      <td>-0.048747</td>
+      <td>0.041864</td>
+      <td>-0.016218</td>
+      <td>-0.139666</td>
+      <td>-0.060876</td>
+      <td>-0.045859</td>
+      <td>-0.046757</td>
+      <td>0.154256</td>
+      <td>0.051364</td>
+      <td>0.036389</td>
+      <td>-0.058372</td>
+      <td>0.006373</td>
+      <td>-0.010014</td>
+    </tr>
+    <tr>
+      <th>ČSSD</th>
+      <td>-0.022391</td>
+      <td>-0.147241</td>
+      <td>-0.066177</td>
+      <td>0.118913</td>
+      <td>0.185555</td>
+      <td>0.010726</td>
+      <td>-0.125068</td>
+      <td>-0.042067</td>
+      <td>-0.033726</td>
+      <td>-0.038372</td>
+      <td>0.171226</td>
+      <td>0.098466</td>
+      <td>-0.046122</td>
+      <td>-0.124447</td>
+      <td>-0.066018</td>
+      <td>0.169345</td>
+    </tr>
+    <tr>
+      <th>KSČM</th>
+      <td>0.059202</td>
+      <td>-0.081795</td>
+      <td>-0.042625</td>
+      <td>0.105669</td>
+      <td>0.020257</td>
+      <td>0.013283</td>
+      <td>-0.319709</td>
+      <td>-0.178327</td>
+      <td>-0.166958</td>
+      <td>-0.262716</td>
+      <td>0.316410</td>
+      <td>0.303501</td>
+      <td>-0.216504</td>
+      <td>-0.200673</td>
+      <td>0.146726</td>
+      <td>0.220622</td>
+    </tr>
+    <tr>
+      <th>Zelení</th>
+      <td>-0.032694</td>
+      <td>0.092365</td>
+      <td>0.034565</td>
+      <td>-0.010254</td>
+      <td>-0.110193</td>
+      <td>0.064553</td>
+      <td>0.010293</td>
+      <td>0.002065</td>
+      <td>0.025733</td>
+      <td>-0.018982</td>
+      <td>-0.056857</td>
+      <td>0.005037</td>
+      <td>-0.038122</td>
+      <td>-0.027387</td>
+      <td>0.017800</td>
+      <td>-0.020482</td>
+    </tr>
+    <tr>
+      <th>Trikolora</th>
+      <td>0.015399</td>
+      <td>0.020627</td>
+      <td>0.053823</td>
+      <td>-0.048607</td>
+      <td>-0.026481</td>
+      <td>-0.013481</td>
+      <td>0.002132</td>
+      <td>0.012855</td>
+      <td>0.026780</td>
+      <td>0.007538</td>
+      <td>-0.015067</td>
+      <td>-0.025812</td>
+      <td>0.043512</td>
+      <td>0.045785</td>
+      <td>-0.028393</td>
+      <td>-0.061793</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>
+<p>The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.</p>
+<p>PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.</p>
+<p>Other things to note are the correlations with Roma population, it’s strongest with Zelení and PirSTAN,</p>
+</section>
 </section>
 </section>
 

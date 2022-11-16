@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn.objects as so
 import matplotlib.ticker as ticks
 
-base_size = (8, 6)
+base_size = (7, 5)
 
 theme = {
     "context": "notebook",
@@ -42,11 +42,25 @@ def plot_edu_count(df: pd.DataFrame):
             "High w/o m.",
             "Elementary",
         ],
-    ).label(title="Ratio of inhabitants with a particular level of education"
-            ).layout(size=base_size)
+    ).label(
+        title="Percentage of inhabitants with a particular level of education",
+        x=None,
+    )
 
 
-def get_employment_graphs(df):
+def plot_other_sociodem(df: pd.DataFrame):
+
+    return _plot_dist_bar_ratio(
+        df,
+        ["sl11rozv", "sl11deti", "sl11seni", "sl11kat", "sl11rom"],
+        ["Divorced", "Children", "Pensioners", "Catholics", "Roma"],
+    ).label(
+        title="Percentage of inhabitants belonging to a particular groups",
+        x=None,
+    ).layout(size=base_size)
+
+
+def get_employment_municipality_plot(df):
     return box_cross_size_plot(
         df, "sl11obyvatel", {
             "sl11zam": "Employee",
@@ -54,7 +68,7 @@ def get_employment_graphs(df):
             "sl11nezam": "Unemployed",
             "sl11neprduch": "Retired",
         }).label(
-            x="Ratio",
+            x=None,
             y="Municipality size",
             title="Employment status by municipality size",
             color="Employment status",
@@ -73,10 +87,12 @@ def plot_municipality_size_ratio(df: pd.DataFrame):
     p = so.Plot(
         x=counts / df["sl11obyvatel"].sum(),
         y=counts.index,
-        color=counts.index).add(so.Bar(), legend=False).label(
-            title="Ratio of inhabitants living a municipality of given size",
-            x="Ratio",
-            y="Size of municipality")
+        color=counts.index
+    ).add(so.Bar(), legend=False).scale(x=so.Continuous(
+    ).label(ticks.PercentFormatter(xmax=1))).label(
+        title="Percentage of inhabitants living a municipality of given size",
+        x=None,
+        y="Size of municipality").layout(size=base_size)
     return p
 
 
@@ -90,7 +106,10 @@ def load_extended_dataset(path):
 def _plot_dist_bar_ratio(df, cols, names, ax=None):
     counts = df[cols].sum()
     g = so.Plot(x=counts / df["sl11obyvatel"].sum(), y=names,
-                color=names).add(so.Bar(), legend=False).scale(color="Paired")
+                color=names).add(so.Bar(), legend=False).scale(
+                    color="Paired",
+                    x=so.Continuous().label(
+                        ticks.PercentFormatter(xmax=1))).layout(size=base_size)
     if ax:
         g = g.on(ax)
     return g
@@ -101,18 +120,19 @@ def _plot_dist_bar(df, cols, names):
     formatter.set_scientific(False)
     counts = df[cols].sum()
     return so.Plot(x=counts, y=names, color=names).add(
-        so.Bar(), legend=False).scale(color="Paired",
-                                      x=so.Continuous().label(formatter))
+        so.Bar(), legend=False).scale(
+            color="Paired",
+            x=so.Continuous().label(formatter)).layout(size=base_size)
 
 
 def _plot_election_graph(df, cols, names, vote_count_col, ax=None):
     counts = df[cols].sum()[cols]
-    plot = so.Plot(x=counts / df[vote_count_col].sum(), y=names,
-                   color=names).add(so.Bar(),
-                                    legend=False).theme(object_theme).scale(
-                                        color="Paired",
-                                        x=so.Continuous().label(
-                                            ticks.PercentFormatter(xmax=1)))
+    plot = so.Plot(
+        x=counts / df[vote_count_col].sum(), y=names,
+        color=names).add(so.Bar(), legend=False).theme(object_theme).scale(
+            color="Paired",
+            x=so.Continuous().label(
+                ticks.PercentFormatter(xmax=1))).layout(size=base_size)
     if ax:
         plot = plot.on(ax)
     return plot
@@ -129,8 +149,8 @@ def plot_elections_2017(df, ax=None):
             "par17ksc",
             "par17soc",
             "par17kdu",
-            "par17sta",
             "par17top",
+            "par17sta",
             "par17svo",
             "par17zel",
         ],
@@ -138,26 +158,29 @@ def plot_elections_2017(df, ax=None):
             "ANO",
             "ODS",
             "SPD",
-            "TOP09",
-            "KSCM",
-            "CSSD",
+            "Piráti",
+            "KSČM",
+            "ČSSD",
             "KDU",
+            "TOP09",
             "STAN",
-            "Pirati",
-            "Svobodni",
-            "Zeleni",
+            "Svobodní",
+            "Zelení",
         ],
         "par17phcelkem",
         ax=ax,
-    ).label(title="Elections 2017").scale(color="Paired")
+    ).label(
+        title="Elections 2017",
+        x=None,
+    ).scale(color="Paired")
 
 
 def plot_elections_2021(df, ax=None):
     return _plot_election_graph(
         df,
         [
-            "par21spolu",
             "par21ano",
+            "par21spolu",
             "par21pirsta",
             "par21spd",
             "par21pri",
@@ -179,12 +202,12 @@ def plot_elections_2021(df, ax=None):
         ],
         "par21phcelkem",
         ax=ax,
-    ).label(title="Elections 2021").scale(color="Paired")
+    ).label(title="Elections 2021", x=None).scale(color="Paired")
 
 
 def plot_employment_size(df):
 
-    return (box_cross_size_plot(
+    return box_cross_size_plot(
         df,
         "sl11obyvatel",
         {
@@ -194,11 +217,11 @@ def plot_employment_size(df):
             "sl11neprduch": "Retired",
         },
     ).label(
-        x="Ratio",
+        x=None,
         y="Municipality size",
         title="Employment status by municipality size",
         color="Employment status",
-    ).limit(x=(0, 1.0)))
+    ).limit(x=(0, 1.0))
 
 
 def box_cross_size_plot(df: pd.DataFrame, base_col, translation):
@@ -215,11 +238,11 @@ def box_cross_size_plot(df: pd.DataFrame, base_col, translation):
         "500-", "500-1k", "1-5k", "5-10k", "10-20k", "20-50k", "50-100k",
         "100k+"
     ])
-    plot = so.Plot(data=df, x="value", y=df.index, color="variable").add(
-        so.Bar(), so.Stack(), legend=False).scale(
-            color="Paired",
-            x=so.Continuous().label(
-                ticks.PercentFormatter(xmax=1))).theme(object_theme)
+    plot = so.Plot(data=df, x="value", y=df.index,
+                   color="variable").add(so.Bar(), so.Stack()).scale(
+                       color="Paired",
+                       x=so.Continuous().label(ticks.PercentFormatter(
+                           xmax=1))).theme(object_theme).layout(size=base_size)
 
     return plot
 
@@ -232,15 +255,15 @@ def education_size_plot(df: pd.DataFrame):
             "sl11vs": "University",
             "sl11vos": "Vocational",
             "sl11nast": "Extended high",
-            "sl11strm": "High w/ m.",
-            "sl11strb": "High w/o m.",
+            "sl11strm": "High w/ maturita",
+            "sl11strb": "High w/o maturita",
             "sl11zakl": "Elementary",
         },
     ).label(
-        x="Ratio",
+        x=None,
         y="Municipality size",
-        title="Results by municipality size",
-        color="Party",
+        title="Education by municipality size",
+        color="Education",
     )
 
     return plot
@@ -255,16 +278,16 @@ def elections2017_size_plot(df: pd.DataFrame):
             "par17ods": "ODS",
             "par17spd": "SPD",
             "par17pir": "TOP09",
-            "par17ksc": "KSCM",
-            "par17soc": "CSSD",
+            "par17ksc": "KSČM",
+            "par17soc": "ČSSD",
             "par17kdu": "KDU",
             "par17sta": "STAN",
-            "par17top": "Pirati",
-            "par17svo": "Svobodni",
-            "par17zel": "Zeleni",
+            "par17top": "Piráti",
+            "par17svo": "Svobodní",
+            "par17zel": "Zelení",
         },
     ).label(
-        x="Ratio",
+        x=None,
         y="Municipality size",
         title="Results by municipality size - 2017",
         color="Party",
@@ -280,30 +303,125 @@ def elections2021_size_plot(df: pd.DataFrame):
             "par21ano": "ANO",
             "par21pirsta": "PirSTAN",
             "par21spd": "SPD",
-            "par21pri": "Prisaha",
-            "par21soc": "CSSD",
-            "par21ksc": "KSCM",
-            "par21tss": "Trikolor",
-            "par21zel": "Zeleni",
+            "par21pri": "Přísaha",
+            "par21soc": "ČSSD",
+            "par21ksc": "KSČM",
+            "par21tss": "Trikolora",
+            "par21zel": "Zelení",
         },
     ).label(
-        x="Ratio",
+        x=None,
         y="Municipality size",
         title="Results by municipality size - 2021",
         color="Party",
     )
 
 
-def create_jointplot(df, x, y, labels):
+def correlations(
+    df,
+    rows,
+    cols,
+    row_trans,
+    columm_trans,
+):
+    corr = df[rows + cols].corr().loc[rows, cols]
+    renamed = corr.rename(index=row_trans).rename(columns=columm_trans)
+    return renamed
 
-    fig, axes = plt.subplots(ncols=len(x),
-                             nrows=len(y),
-                             figsize=(len(x) * 8, len(y) * 6))
-    for i in range(len(x)):
-        for j in range(len(y)):
-            (so.Plot(df, x=x[i],
-                     y=y[j]).add(so.Dots(pointsize=1), legend=False).on(
-                         axes[i][j]).theme(object_theme).label(
-                             **labels[i][j]).plot())
-    fig.suptitle("Relation of X and Y")
-    return fig, axes
+
+def correlations_2021(df):
+    rows = [
+        'par21ano_ratio', 'par21spolu_ratio', 'par21spd_ratio',
+        'par21pirsta_ratio', 'par21pri_ratio', 'par21soc_ratio',
+        'par21ksc_ratio', 'par21zel_ratio', 'par21tss_ratio'
+    ]
+    cols = [
+        'sl11muzi_ratio', 'sl11rozv_ratio', 'sl11deti_ratio', 'sl11seni_ratio',
+        'sl11kat_ratio', 'sl11rom_ratio', 'sl11vs_ratio', 'sl11vos_ratio',
+        'sl11nast_ratio', 'sl11strm_ratio', 'sl11strb_ratio', 'sl11zakl_ratio',
+        'sl11zam_ratio', 'sl11pod_ratio', 'sl11nezam_ratio',
+        'sl11neprduch_ratio'
+    ]
+    row_translate = {
+        "par21spolu_ratio": "SPOLU",
+        "par21ano_ratio": "ANO",
+        "par21pirsta_ratio": "PirSTAN",
+        "par21spd_ratio": "SPD",
+        "par21pri_ratio": "Přísaha",
+        "par21soc_ratio": "ČSSD",
+        "par21ksc_ratio": "KSČM",
+        "par21tss_ratio": "Trikolora",
+        "par21zel_ratio": "Zelení",
+    }
+    col_translate = {
+        'sl11muzi_ratio': 'Men',
+        'sl11rozv_ratio': 'Divorced',
+        'sl11deti_ratio': 'Children',
+        'sl11seni_ratio': 'Pensioners',
+        'sl11kat_ratio': 'Catholic',
+        'sl11rom_ratio': 'Roma',
+        'sl11vs_ratio': 'University',
+        'sl11vos_ratio': 'Vocational',
+        'sl11nast_ratio': 'Extended high school',
+        'sl11strm_ratio': 'High school with maturita',
+        'sl11strb_ratio': 'High school without maturita',
+        'sl11zakl_ratio': 'Elementary school',
+        'sl11zam_ratio': 'Employees',
+        'sl11pod_ratio': 'Enterpreneurs',
+        'sl11nezam_ratio': 'Unemployed',
+        'sl11neprduch_ratio': 'Retired'
+    }
+    return correlations(df, rows, cols, row_translate, col_translate)
+
+
+def correlations_2017(df):
+    rows = [
+        'par17ano_ratio', 'par17ods_ratio', 'par17pir_ratio', 'par17spd_ratio',
+        'par17ksc_ratio', 'par17soc_ratio', 'par17kdu_ratio', 'par17top_ratio',
+        'par17sta_ratio', 'par17zel_ratio', 'par17svo_ratio'
+    ]
+    cols = [
+        'sl11muzi_ratio', 'sl11rozv_ratio', 'sl11deti_ratio', 'sl11seni_ratio',
+        'sl11kat_ratio', 'sl11rom_ratio', 'sl11vs_ratio', 'sl11vos_ratio',
+        'sl11nast_ratio', 'sl11strm_ratio', 'sl11strb_ratio', 'sl11zakl_ratio',
+        'sl11zam_ratio', 'sl11pod_ratio', 'sl11nezam_ratio',
+        'sl11neprduch_ratio'
+    ]
+    row_translate = {
+        "par17ano_ratio": "ANO",
+        "par17ods_ratio": "ODS",
+        "par17spd_ratio": "SPD",
+        "par17pir_ratio": "TOP09",
+        "par17ksc_ratio": "KSČM",
+        "par17soc_ratio": "ČSSD",
+        "par17kdu_ratio": "KDU",
+        "par17sta_ratio": "STAN",
+        "par17top_ratio": "Piráti",
+        "par17svo_ratio": "Svobodní",
+        "par17zel_ratio": "Zelení",
+    }
+    col_translate = {
+        'sl11muzi_ratio': 'Men',
+        'sl11rozv_ratio': 'Divorced',
+        'sl11deti_ratio': 'Children',
+        'sl11seni_ratio': 'Pensioners',
+        'sl11kat_ratio': 'Catholic',
+        'sl11rom_ratio': 'Roma',
+        'sl11vs_ratio': 'University',
+        'sl11vos_ratio': 'Vocational',
+        'sl11nast_ratio': 'Extended high school',
+        'sl11strm_ratio': 'High school with maturita',
+        'sl11strb_ratio': 'High school without maturita',
+        'sl11zakl_ratio': 'Elementary school',
+        'sl11zam_ratio': 'Employees',
+        'sl11pod_ratio': 'Enterpreneurs',
+        'sl11nezam_ratio': 'Unemployed',
+        'sl11neprduch_ratio': 'Retired'
+    }
+    return correlations(
+        df,
+        rows,
+        cols,
+        row_translate,
+        col_translate,
+    )

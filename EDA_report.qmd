@@ -54,7 +54,7 @@ Meaning of each column is described in the provided file and is as follows:
  - `sl11zam` - Census 2011, employed
  - `sl11pod` - Census 2011, enterpreneur
  - `sl11nezam` - Census 2011, unemployed
- - `sl11neprduch` - Census 2011, non-working pensioners
+ - `sl11neprduch` - Census 2011, non-working pensioners (retired)
  - `sl11budov` - Census 2011, number of buildings
 
 ## Feature Extraction
@@ -82,6 +82,11 @@ scripts.plot_edu_count(df)
 Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.
 
 ```{python}
+  scripts.plot_other_sociodem(df)
+
+```
+It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.
+```{python}
 scripts.plot_elections_2017(df)
 ```
 In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.
@@ -90,10 +95,72 @@ In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of
 scripts.plot_elections_2021(df)
 ```
 In 2021 ANO won the elections as well, however with much smaller margin only 4 parties (and coallitions) got into the Chamber of Deputies.
-### Relationships
 
+### Relationships
+To understand election results better let's explore how they relate to other variables.
 First, let's explore how does size of municipality influence election results.
 
-Then let's explore the proportion of education level in municipalities of different sizes.
+```{python}
+scripts.elections2017_size_plot(df)
 
+```
+
+
+
+```{python}
+scripts.elections2021_size_plot(df)
+
+```
+
+Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) doing disproportionately well in bigger cities.
+
+To gain more insight into this result, let's see how does size of municipality relate to education and employment distribution.
+```{python}
+scripts.plot_employment_size(df)
+```
+Clearly, the distribution of employment does not vary very much between different sizes of municipalities.
+```{python}
+
+scripts.education_size_plot(df)
+```
  
+Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.
+
+Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.
+
+First we explore the 2017 elections.
+
+```{python}
+scripts.correlations_2017(df)
+```
+Clearly ANO's support is negatively correlated with higher education and income (employees and enterpreneurs) and positively with lower education and having income from the state (pensioners and unemployed).
+
+ODS has an inverse correlation profile to ANO. Its support is positively correlated with higher education and being employed or self-employed.
+
+Piráti are similar to ODS, they have extremely high positive correlation with higher education .
+
+KDU has extremely high correlation with catholics which is to be expected given their name. It also has negative correlation with divorced which is to be expected as well. 
+
+SPD has strong negative correlation with higher education, and positive correlation with lower education and the unemployed.
+
+ČSSD has strong positive correlations with unemployed, retired and pensioners and slightly weaker with lower education.
+
+TOP09 has similar correlations as the Piráti do.
+
+STAN has no strong correlations.
+
+KSČM is similar to SPD and ANO, high positive correlation with lower education, unemployed and pensioners.
+
+---
+
+Now let's continue with 2021
+
+```{python}
+scripts.correlations_2021(df)
+```
+
+The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.
+
+PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.
+
+Other things to note are the correlations with Roma population, it's strongest with Zelení and PirSTAN,
