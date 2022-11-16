@@ -2,8 +2,9 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import seaborn.objects as so
+import matplotlib.ticker as ticks
 
-base_size = (8,6)
+base_size = (8, 6)
 
 theme = {
     "context": "notebook",
@@ -24,9 +25,9 @@ sns.set_theme(**theme)
 
 
 def plot_gender_counts(df: pd.DataFrame):
-    return _plot_dist_bar(
-        df, ["sl11muzi", "sl11zeny"],
-        ["Men", "Women"]).label(title="Number of men and women")
+    return _plot_dist_bar(df, ["sl11muzi", "sl11zeny"],
+                          ["Men", "Women"]).label(
+                              title="Number of men and women", x="Count")
 
 
 def plot_edu_count(df: pd.DataFrame):
@@ -41,34 +42,43 @@ def plot_edu_count(df: pd.DataFrame):
             "High w/o m.",
             "Elementary",
         ],
-    ).label(title="Ratio of inhabitants with a particular level of education").layout(size=base_size)
-
+    ).label(title="Ratio of inhabitants with a particular level of education"
+            ).layout(size=base_size)
 
 
 def get_employment_graphs(df):
-    return box_cross_size_plot(df,"sl11obyvatel",{
-        "sl11zam": "Employee",
-        "sl11pod": "Enterpreneur",
-        "sl11nezam": "Unemployed",
-        "sl11neprduch": "Retired",
-    }).label(
+    return box_cross_size_plot(
+        df, "sl11obyvatel", {
+            "sl11zam": "Employee",
+            "sl11pod": "Enterpreneur",
+            "sl11nezam": "Unemployed",
+            "sl11neprduch": "Retired",
+        }).label(
             x="Ratio",
             y="Municipality size",
             title="Employment status by municipality size",
             color="Employment status",
-        ).limit(x=(0,1.0)).theme(object_theme)
+        ).limit(x=(0, 1.0)).theme(object_theme)
+
 
 def plot_municipality_size_ratio(df: pd.DataFrame):
     counts = df.groupby("vel.obce_cat")["sl11obyvatel"].sum()[[
         "500-", "500-1k", "1-5k", "5-10k", "10-20k", "20-50k", "50-100k",
         "100k+"
     ]]
-    return so.Plot(x=counts / df["sl11obyvatel"].sum(), y=counts.index, color =counts.index).add(so.Bar()).label(
-       title="Ratio of inhabitants living a municipality of given size",
-       x= "Number of inhabitants",
-       y="Size of municipality"
+    counts.index = counts.index.reorder_categories([
+        "500-", "500-1k", "1-5k", "5-10k", "10-20k", "20-50k", "50-100k",
+        "100k+"
+    ])
+    p = so.Plot(
+        x=counts / df["sl11obyvatel"].sum(),
+        y=counts.index,
+        color=counts.index).add(so.Bar(), legend=False).label(
+            title="Ratio of inhabitants living a municipality of given size",
+            x="Ratio",
+            y="Size of municipality")
+    return p
 
-    )
 
 def load_extended_dataset(path):
     df = pd.read_csv(path, sep=";", index_col="obec_okrsek")
@@ -79,24 +89,33 @@ def load_extended_dataset(path):
 
 def _plot_dist_bar_ratio(df, cols, names, ax=None):
     counts = df[cols].sum()
-    g = so.Plot(x=counts / df["sl11obyvatel"].sum(), y=names, color=names).add(so.Bar()).scale(color="Paired")
+    g = so.Plot(x=counts / df["sl11obyvatel"].sum(), y=names,
+                color=names).add(so.Bar(), legend=False).scale(color="Paired")
     if ax:
         g = g.on(ax)
     return g
 
 
 def _plot_dist_bar(df, cols, names):
+    formatter = ticks.ScalarFormatter(useOffset=False)
+    formatter.set_scientific(False)
     counts = df[cols].sum()
-    return so.Plot(x=counts, y=names, color=names).add(so.Bar()).scale(color="Paired")
+    return so.Plot(x=counts, y=names, color=names).add(
+        so.Bar(), legend=False).scale(color="Paired",
+                                      x=so.Continuous().label(formatter))
 
 
 def _plot_election_graph(df, cols, names, vote_count_col, ax=None):
     counts = df[cols].sum()[cols]
-    plot =  so.Plot(x=counts / df[vote_count_col].sum(), y=names, color=names).add(so.Bar()).theme(object_theme).scale(color="Paired")
+    plot = so.Plot(x=counts / df[vote_count_col].sum(), y=names,
+                   color=names).add(so.Bar(),
+                                    legend=False).theme(object_theme).scale(
+                                        color="Paired",
+                                        x=so.Continuous().label(
+                                            ticks.PercentFormatter(xmax=1)))
     if ax:
         plot = plot.on(ax)
     return plot
-
 
 
 def plot_elections_2017(df, ax=None):
@@ -196,8 +215,11 @@ def box_cross_size_plot(df: pd.DataFrame, base_col, translation):
         "500-", "500-1k", "1-5k", "5-10k", "10-20k", "20-50k", "50-100k",
         "100k+"
     ])
-    plot = (so.Plot(data=df, x="value", y=df.index, color="variable").add(
-        so.Bar(), so.Stack()).scale(color="Paired")).theme(object_theme)
+    plot = so.Plot(data=df, x="value", y=df.index, color="variable").add(
+        so.Bar(), so.Stack(), legend=False).scale(
+            color="Paired",
+            x=so.Continuous().label(
+                ticks.PercentFormatter(xmax=1))).theme(object_theme)
 
     return plot
 
@@ -279,7 +301,9 @@ def create_jointplot(df, x, y, labels):
                              figsize=(len(x) * 8, len(y) * 6))
     for i in range(len(x)):
         for j in range(len(y)):
-            (so.Plot(df, x=x[i], y=y[j]).add(so.Dots(pointsize=1)).on(
-                axes[i][j]).theme(object_theme).label(**labels[i][j]).plot())
+            (so.Plot(df, x=x[i],
+                     y=y[j]).add(so.Dots(pointsize=1), legend=False).on(
+                         axes[i][j]).theme(object_theme).label(
+                             **labels[i][j]).plot())
     fig.suptitle("Relation of X and Y")
     return fig, axes
