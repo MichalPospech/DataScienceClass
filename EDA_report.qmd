@@ -7,7 +7,7 @@ jupyter: python3
 ---
 
 # Introduction
-This document analyses data from the "Geodata" dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling election results from 
+This document analyses data from the "Geodata" dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling parlimentary election results from 
  - past parlimentary election results and
  - sociodemographic data.
 
@@ -59,7 +59,7 @@ Meaning of each column is described in the provided file and is as follows:
 
 ## Feature Extraction
 
-Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also number of women was not provided and had to be calculated as `total` - `men`.
+Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also the number of women was not provided and had to be calculated as `total` - `men`.
 
 ## Exploration
 
@@ -79,7 +79,7 @@ One of the factors that could be influencing political preferences of people is 
 scripts.plot_edu_count(df)
 
 ```
-Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.
+Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have only high school education while just over 10% have a university degree.
 
 ```{python}
   scripts.plot_other_sociodem(df)
@@ -112,9 +112,9 @@ scripts.elections2021_size_plot(df)
 
 ```
 
-Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) doing disproportionately well in bigger cities.
+Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) do disproportionately well in bigger cities.
 
-To gain more insight into this result, let's see how does size of municipality relate to education and employment distribution.
+To gain more insight into this result, let's see how does the size of municipality relate to education and employment distribution.
 ```{python}
 scripts.plot_employment_size(df)
 ```
@@ -126,7 +126,7 @@ scripts.education_size_plot(df)
  
 Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.
 
-Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.
+Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out. 
 
 
 
@@ -155,7 +155,7 @@ KSČM is similar to SPD and ANO, high positive correlation with lower education,
 
 ---
 
-Now let's continue with 2021
+Now let's continue with 2021 elections.
 
 ```{python}
 scripts.correlations_2021(df)
@@ -165,4 +165,4 @@ The trends from previous election are mostly reinforced, ANO has positive correl
 
 PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.
 
-Other things to note are the correlations with Roma population, it's strongest with Zelení and PirSTAN,
+Other things to note are the correlations with Roma population, it's strongest with Zelení and PirSTAN.

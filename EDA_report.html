@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>This document analyses data from the “Geodata” dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling election results from - past parlimentary election results and - sociodemographic data.</p>
+<p>This document analyses data from the “Geodata” dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling parlimentary election results from - past parlimentary election results and - sociodemographic data.</p>
 </section>
 <section id="dataset" class="level1">
 <h1>Dataset</h1>
@@ -115,43 +115,43 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="feature-extraction" class="level2">
 <h2 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h2>
-<p>Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also number of women was not provided and had to be calculated as <code>total</code> - <code>men</code>.</p>
+<p>Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also the number of women was not provided and had to be calculated as <code>total</code> - <code>men</code>.</p>
 </section>
 <section id="exploration" class="level2">
 <h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
 <p>We start with exploring the various sociodemogaphic indicators provided.</p>
 <div class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <p><img src="EDA_report_files/figure-html/cell-3-output-1.png" width="654" height="465"></p>
 </div>
 </div>
 <p>The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.</p>
 <div class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="16">
+<div class="cell-output cell-output-display" data-execution_count="42">
 <p><img src="EDA_report_files/figure-html/cell-4-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.</p>
 <div class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="17">
+<div class="cell-output cell-output-display" data-execution_count="43">
 <p><img src="EDA_report_files/figure-html/cell-5-output-1.png" width="657" height="465"></p>
 </div>
 </div>
-<p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have high school education while just over 10% have a university degree.</p>
+<p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have only high school education while just over 10% have a university degree.</p>
 <div class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="18">
+<div class="cell-output cell-output-display" data-execution_count="44">
 <p><img src="EDA_report_files/figure-html/cell-6-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.</p>
 <div class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="19">
+<div class="cell-output cell-output-display" data-execution_count="45">
 <p><img src="EDA_report_files/figure-html/cell-7-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.</p>
 <div class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="20">
+<div class="cell-output cell-output-display" data-execution_count="46">
 <p><img src="EDA_report_files/figure-html/cell-8-output-1.png" width="657" height="465"></p>
 </div>
 </div>
@@ -160,33 +160,33 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="relationships">Relationships</h3>
 <p>To understand election results better let’s explore how they relate to other variables. First, let’s explore how does size of municipality influence election results.</p>
 <div class="cell" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="21">
+<div class="cell-output cell-output-display" data-execution_count="47">
 <p><img src="EDA_report_files/figure-html/cell-9-output-1.png" width="789" height="465"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="22">
+<div class="cell-output cell-output-display" data-execution_count="48">
 <p><img src="EDA_report_files/figure-html/cell-10-output-1.png" width="783" height="465"></p>
 </div>
 </div>
-<p>Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) doing disproportionately well in bigger cities.</p>
-<p>To gain more insight into this result, let’s see how does size of municipality relate to education and employment distribution.</p>
+<p>Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) do disproportionately well in bigger cities.</p>
+<p>To gain more insight into this result, let’s see how does the size of municipality relate to education and employment distribution.</p>
 <div class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display" data-execution_count="23">
+<div class="cell-output cell-output-display" data-execution_count="49">
 <p><img src="EDA_report_files/figure-html/cell-11-output-1.png" width="835" height="465"></p>
 </div>
 </div>
 <p>Clearly, the distribution of employment does not vary very much between different sizes of municipalities.</p>
 <div class="cell" data-execution_count="11">
-<div class="cell-output cell-output-display" data-execution_count="24">
+<div class="cell-output cell-output-display" data-execution_count="50">
 <p><img src="EDA_report_files/figure-html/cell-12-output-1.png" width="853" height="465"></p>
 </div>
 </div>
 <p>Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.</p>
-<p>Now, let’s explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.</p>
+<p>Now, let’s explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.</p>
 <p>First we explore the 2017 elections.</p>
 <div class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="25">
+<div class="cell-output cell-output-display" data-execution_count="51">
 
 <div>
 
@@ -437,9 +437,9 @@ ul.task-list li input[type="checkbox"] {
 <p>STAN has no strong correlations.</p>
 <p>KSČM is similar to SPD and ANO, high positive correlation with lower education, unemployed and pensioners.</p>
 <hr>
-<p>Now let’s continue with 2021</p>
+<p>Now let’s continue with 2021 elections.</p>
 <div class="cell" data-execution_count="13">
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell-output cell-output-display" data-execution_count="52">
 
 <div>
 
@@ -644,7 +644,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <p>The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.</p>
 <p>PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.</p>
-<p>Other things to note are the correlations with Roma population, it’s strongest with Zelení and PirSTAN,</p>
+<p>Other things to note are the correlations with Roma population, it’s strongest with Zelení and PirSTAN.</p>
 </section>
 </section>
 </section>

@@ -1,6 +1,5 @@
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
 import seaborn.objects as so
 import matplotlib.ticker as ticks
 
@@ -20,8 +19,6 @@ object_theme = {
     **sns.axes_style("darkgrid"),
     **sns.plotting_context("notebook")
 }
-sns.set_palette("Paired")
-sns.set_theme(**theme)
 
 
 def plot_gender_counts(df: pd.DataFrame):
@@ -149,8 +146,8 @@ def plot_elections_2017(df, ax=None):
             "par17ksc",
             "par17soc",
             "par17kdu",
-            "par17top",
             "par17sta",
+            "par17top",
             "par17svo",
             "par17zel",
         ],
@@ -162,8 +159,8 @@ def plot_elections_2017(df, ax=None):
             "KSČM",
             "ČSSD",
             "KDU",
-            "TOP09",
             "STAN",
+            "TOP09",
             "Svobodní",
             "Zelení",
         ],
