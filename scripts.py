@@ -368,7 +368,7 @@ def correlations_2021(df):
         'sl11nezam_ratio': 'Unemployed',
         'sl11neprduch_ratio': 'Retired'
     }
-    return correlations(df, rows, cols, row_translate, col_translate)
+    return correlations(df, rows, cols, row_translate, col_translate).T
 
 
 def correlations_2017(df):
@@ -421,4 +421,4 @@ def correlations_2017(df):
         cols,
         row_translate,
         col_translate,
-    )
+    ).T
