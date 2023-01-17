@@ -1,0 +1,233 @@
+---
+title: "NDBI048 - `GeoData` - EDA"
+author: "Michal Pospěch"
+execute:
+  echo: false
+jupyter: python3
+---
+
+# Introduction
+This document analyses data from the "Geodata" dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling parlimentary election results from 
+ - past parlimentary election results and
+ - sociodemographic data.
+
+# Dataset
+This dataset contains election-district level sociodemographic data and election results. Fortunately the dataset is complete and contains no duplicities in data thus no cleaning has to be done. 
+The dataset contains 14271 rows and 51 columns, each row representing one electoral district.
+
+```{python}
+import scripts
+%matplotlib inline
+import matplotlib_inline
+matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
+df = scripts.load_extended_dataset("./data/volby/dataset_extended.csv")
+
+```
+## Columns 
+Meaning of each column is described in the provided file and is as follows:
+
+ - `obec_okrsek` - district and municipality code, is unique and is used as index
+ - `obec` - municipality (LAU2) code
+ - `okres` - county (LAU1)
+ - `kraj` - region (NUTS3)
+ - `vel.obce` - number of inhabitants
+ - `par{21,17}vsezn` - Parlimentary elections 2021/17, number of votes from the "electoral list"
+ - `par{21,17}phcelkem` - Parlimentary elections 2021/17, number of votes in district
+ - `par{21,17}*` - Parlimentary elections 2021/17, number of votes for a particular party
+ - `prez18zem2` - Presidential elections 2018, 2nd round, number of votes for M. Zeman
+ - `prez18dra2` - Presidential elections 2018, 2nd round, number of votes for J. Drahos
+ - `nazev_obce` - municipality name
+ - `nazev.pha` - city name (same as `nazev_obce` for non-statutary cities)
+ - `sl11obyvatel` - Census 2011, number of inhabitants 
+ - `sl11muzi` - Census 2011, number of men
+ - `sl11rozv` - Census 2011, divorced
+ - `sl11deti` - Census 2011, children
+ - `sl11seni` - Census 2011, pensioners
+ - `sl11kat` - Census 2011, catholics
+ - `sl11rom` - Census 2011, roma
+ - `sl11vs` - Census 2011, university education
+ - `sl11vos` - Census 2011, vocational school
+ - `sl11nast` - Census 2011, extended high school
+ - `sl11strm` - Census 2011, high school with maturita
+ - `sl11strb` - Census 2011, high school without maturita
+ - `sl11zakl` - Census 2011, elementary school
+ - `sl11zam` - Census 2011, employed
+ - `sl11pod` - Census 2011, enterpreneur
+ - `sl11nezam` - Census 2011, unemployed
+ - `sl11neprduch` - Census 2011, non-working pensioners (retired)
+ - `sl11budov` - Census 2011, number of buildings
+
+## Feature Extraction
+
+Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also the number of women was not provided and had to be calculated as `total` - `men`.
+
+## Exploration
+
+We start with exploring the various sociodemogaphic indicators provided. 
+```{python}
+scripts.plot_gender_counts(df)
+
+```
+The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.
+```{python}
+scripts.plot_municipality_size_ratio(df)
+
+```
+One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.
+
+```{python}
+scripts.plot_edu_count(df)
+
+```
+Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have only high school education while just over 10% have a university degree.
+
+```{python}
+  scripts.plot_other_sociodem(df)
+
+```
+It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.
+```{python}
+scripts.plot_elections_2017(df)
+```
+In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.
+
+```{python}
+scripts.plot_elections_2021(df)
+```
+In 2021 ANO won the elections as well, however with much smaller margin only 4 parties (and coallitions) got into the Chamber of Deputies.
+
+### Relationships
+To understand election results better let's explore how they relate to other variables.
+First, let's explore how does size of municipality influence election results.
+
+```{python}
+scripts.elections2017_size_plot(df)
+
+```
+
+
+
+```{python}
+scripts.elections2021_size_plot(df)
+
+```
+
+Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) do disproportionately well in bigger cities.
+
+To gain more insight into this result, let's see how does the size of municipality relate to education and employment distribution.
+```{python}
+scripts.plot_employment_size(df)
+```
+Clearly, the distribution of employment does not vary very much between different sizes of municipalities.
+```{python}
+
+scripts.education_size_plot(df)
+```
+ 
+Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.
+
+Now, let's explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out. 
+
+
+
+First we explore the 2017 elections.
+
+```{python}
+scripts.correlations_2017(df)
+```
+Clearly ANO's support is negatively correlated with higher education and income (employees and enterpreneurs) and positively with lower education and having income from the state (pensioners and unemployed).
+
+ODS has an inverse correlation profile to ANO. Its support is positively correlated with higher education and being employed or self-employed.
+
+Piráti are similar to ODS, they have extremely high positive correlation with higher education .
+
+KDU has extremely high correlation with catholics which is to be expected given their name. It also has negative correlation with divorced which is to be expected as well. 
+
+SPD has strong negative correlation with higher education, and positive correlation with lower education and the unemployed.
+
+ČSSD has strong positive correlations with unemployed, retired and pensioners and slightly weaker with lower education.
+
+TOP09 has similar correlations as the Piráti do.
+
+STAN has no strong correlations.
+
+KSČM is similar to SPD and ANO, high positive correlation with lower education, unemployed and pensioners.
+
+---
+
+Now let's continue with 2021 elections.
+
+```{python}
+scripts.correlations_2021(df)
+```
+
+The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.
+
+PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.
+
+Other things to note are the correlations with Roma population, it's strongest with Zelení and PirSTAN.
+
+# Modelling
+
+Our goal is to predict electoral results in 2021 given sociodemographic data and results of previous elections. This task can be viewed as multinomial regression with additional constraints, the predicted vectors must sum to 1 and be non-negative. This is however somewhat hard because some capacity of the model will have to be used on learning these constraints.
+
+First method that was used was k-nearest neighbors for regression. Its advantage is, that it will keep the constraints without any further modifications. Second method used multinomial linear regression. Unfortunately in this case the predicted "distributions" of votes were not guaranteed to be a distribution since the sum of the outputs is not constrained to be 1. Last method used, with little success, were neural networks described in more detail later. 
+
+All models were evaulated using average of mean square errors of produced and original "distributions". Original idea was to use KL-Divergence as that is a better measure of similarity between two distributions but it would require further pre-processing to remove all 0's from the dataset by Laplace smoothing.
+
+## Data 
+
+Each model was evaluated on multiple datasets:
+
+ - education data only (`education`)
+ - previous elections only (`elections`)
+ - employment status only (`employment`)
+ - all of the above + miscelaneous data such as percentage of catholics, roma population, percentage of divorced, etc. (`full`)
+
+All spliting of the dataset was done in a stratified manner based on regions. In simple terms, both test and train datasets would contain similar percentages of districts from each region. This should make the models better since each region has its specifics and this way the model will be able to incorporate all of them.
+
+Before training the models, the dataset was normalised using the `StandardScaler` from scikit learn library and trained on the "train" part of the dataset so that all the datapoints are from a $N(0,I)$ distribution.
+
+All models were evaluated using 10-fold crossvalidation.
+
+## K-Nearest Neigbors
+K-Nearest Neighbors regressor is an non-parametric model which makes predictions by taking values assigned to k nearest data points and simply averages them.
+
+Implementation of kNN regressor was taken from sklearn library, namely `KNeighborsRegressor`. It was run with default parameters except for `n_neighbors` for which values from 3 to 24 were tried and the results are shown below.
+
+
+```{python}
+scripts.plot_knn_res()
+```
+
+
+Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one government thus there's no reason to behave differently from other similar districts. 
+
+Using all the data was not as good but still a decent model. The bigger error was probably caused by so called "Curse of Dimensionality" which describes the phenomena that appear in higher dimensionality spaces. Also the additional data might have added more noise and thus made the regressor err more.
+
+Education and employment data performed similarly with education having slight edge.
+
+## Linear Model
+
+Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely `MultiTaskElasticNet`. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms that are linear and quadratic in the learned parameters which should help make better models.
+
+```{python}
+scripts.plot_lin_res()
+
+```
+
+It can be clearly seen that the model performed badly any time there was non-zero linear term. In the only interesting case with L1 ratio 0, the pattern is similar to kNN results.
+
+## Neural Networks
+
+Since the previous method was not able to exploit the constraints (non-negativity, sum 1) we decided to use custom neural network. The idea was to make a simple neural network (just one hidden layer) and pass the result into a softmax layer which would make the output into a distribution. And since neural networks learn using the gradient of loss it would learn from the data and no capacity of the model would be used on learning the two contraints. At least that was the theory. Unfortunately, due to a bad network desing or a bug in the code caused by inexperience with PyTorch and PyTorch Lightning. The remains of this attempt can be viewed in the supplementary notebook.
+
+
+# Summary
+
+
+
+
+And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Another would be to spend more time with neural networks to get some reasonable result out of them and try to tune the hyperparameters in linear regression a bit more.
+
+

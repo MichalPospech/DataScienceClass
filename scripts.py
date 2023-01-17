@@ -422,3 +422,31 @@ def correlations_2017(df):
         row_translate,
         col_translate,
     ).T
+
+
+def _plot_model_perf(df, param_col, label_dict):
+    return so.Plot(df, x=param_col, y='score', color='dataset').add(
+        so.Lines(), group='dataset').theme(object_theme).layout(
+            size=base_size).label(**label_dict)
+
+
+def plot_knn_res():
+    knn_df = pd.read_csv("data/volby/modeling_results_knn.csv")
+    return _plot_model_perf(
+        knn_df, 'n_neighbors', {
+            'title': 'kNN Regression Results',
+            'x': 'Number of neighbors',
+            'y': 'Average MSE',
+            'color': 'Dataset'
+        })
+
+
+def plot_lin_res():
+    lin_df = pd.read_csv("data/volby/modeling_results_lin.csv")
+    return _plot_model_perf(
+        lin_df, 'l1_ratio', {
+            'title': 'Linear Regression Results',
+            'x': 'L1 Ratio',
+            'y': 'Average MSE',
+            'color': 'Dataset'
+        })

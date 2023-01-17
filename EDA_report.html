@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.3.107">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,6 +21,69 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -38,6 +101,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -187,254 +251,250 @@ ul.task-list li input[type="checkbox"] {
 <p>First we explore the 2017 elections.</p>
 <div class="cell" data-execution_count="12">
 <div class="cell-output cell-output-display" data-execution_count="12">
-
-<div>
-
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>ANO</th>
-      <th>ODS</th>
-      <th>TOP09</th>
-      <th>SPD</th>
-      <th>KSČM</th>
-      <th>ČSSD</th>
-      <th>KDU</th>
-      <th>Piráti</th>
-      <th>STAN</th>
-      <th>Zelení</th>
-      <th>Svobodní</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Men</th>
-      <td>0.041093</td>
-      <td>-0.060295</td>
-      <td>-0.056719</td>
-      <td>0.056423</td>
-      <td>0.077569</td>
-      <td>-0.056563</td>
-      <td>0.005917</td>
-      <td>-0.106459</td>
-      <td>0.043754</td>
-      <td>-0.093035</td>
-      <td>-0.023903</td>
-    </tr>
-    <tr>
-      <th>Divorced</th>
-      <td>0.026135</td>
-      <td>0.077424</td>
-      <td>0.163635</td>
-      <td>0.110595</td>
-      <td>-0.039317</td>
-      <td>-0.036474</td>
-      <td>-0.376418</td>
-      <td>0.153778</td>
-      <td>-0.074612</td>
-      <td>0.169291</td>
-      <td>0.073551</td>
-    </tr>
-    <tr>
-      <th>Children</th>
-      <td>0.034524</td>
-      <td>-0.027001</td>
-      <td>-0.061479</td>
-      <td>0.093404</td>
-      <td>-0.022018</td>
-      <td>-0.086778</td>
-      <td>0.036371</td>
-      <td>-0.086571</td>
-      <td>0.069653</td>
-      <td>-0.064333</td>
-      <td>-0.013907</td>
-    </tr>
-    <tr>
-      <th>Pensioners</th>
-      <td>-0.022401</td>
-      <td>-0.003415</td>
-      <td>-0.071983</td>
-      <td>-0.150424</td>
-      <td>0.081557</td>
-      <td>0.138584</td>
-      <td>0.087908</td>
-      <td>0.008118</td>
-      <td>-0.022076</td>
-      <td>-0.005738</td>
-      <td>-0.052158</td>
-    </tr>
-    <tr>
-      <th>Catholic</th>
-      <td>-0.159647</td>
-      <td>-0.176227</td>
-      <td>-0.214413</td>
-      <td>-0.037560</td>
-      <td>-0.033460</td>
-      <td>0.135655</td>
-      <td>0.772638</td>
-      <td>-0.173483</td>
-      <td>-0.091907</td>
-      <td>-0.121956</td>
-      <td>-0.076574</td>
-    </tr>
-    <tr>
-      <th>Roma</th>
-      <td>-0.009232</td>
-      <td>-0.024944</td>
-      <td>-0.023842</td>
-      <td>0.000987</td>
-      <td>0.095163</td>
-      <td>0.022344</td>
-      <td>-0.031583</td>
-      <td>-0.018851</td>
-      <td>-0.012162</td>
-      <td>0.013135</td>
-      <td>-0.003160</td>
-    </tr>
-    <tr>
-      <th>University</th>
-      <td>-0.377577</td>
-      <td>0.484473</td>
-      <td>0.449711</td>
-      <td>-0.316076</td>
-      <td>-0.405961</td>
-      <td>-0.128071</td>
-      <td>-0.001044</td>
-      <td>0.603053</td>
-      <td>-0.041547</td>
-      <td>0.309264</td>
-      <td>0.188474</td>
-    </tr>
-    <tr>
-      <th>Vocational</th>
-      <td>-0.243306</td>
-      <td>0.274207</td>
-      <td>0.312683</td>
-      <td>-0.205852</td>
-      <td>-0.236990</td>
-      <td>-0.070846</td>
-      <td>-0.026492</td>
-      <td>0.346914</td>
-      <td>0.029837</td>
-      <td>0.164134</td>
-      <td>0.112741</td>
-    </tr>
-    <tr>
-      <th>Extended high school</th>
-      <td>-0.133087</td>
-      <td>0.243706</td>
-      <td>0.216965</td>
-      <td>-0.168482</td>
-      <td>-0.231511</td>
-      <td>-0.024863</td>
-      <td>-0.047736</td>
-      <td>0.257751</td>
-      <td>0.004995</td>
-      <td>0.153460</td>
-      <td>0.099864</td>
-    </tr>
-    <tr>
-      <th>High school with maturita</th>
-      <td>-0.185962</td>
-      <td>0.358873</td>
-      <td>0.334843</td>
-      <td>-0.246670</td>
-      <td>-0.351982</td>
-      <td>-0.072048</td>
-      <td>-0.033789</td>
-      <td>0.341346</td>
-      <td>0.013866</td>
-      <td>0.166509</td>
-      <td>0.152538</td>
-    </tr>
-    <tr>
-      <th>High school without maturita</th>
-      <td>0.337919</td>
-      <td>-0.453015</td>
-      <td>-0.425833</td>
-      <td>0.249080</td>
-      <td>0.376581</td>
-      <td>0.146026</td>
-      <td>0.072947</td>
-      <td>-0.549818</td>
-      <td>0.023435</td>
-      <td>-0.318216</td>
-      <td>-0.182123</td>
-    </tr>
-    <tr>
-      <th>Elementary school</th>
-      <td>0.246680</td>
-      <td>-0.416512</td>
-      <td>-0.402878</td>
-      <td>0.268286</td>
-      <td>0.398431</td>
-      <td>0.146079</td>
-      <td>0.063060</td>
-      <td>-0.461539</td>
-      <td>-0.046621</td>
-      <td>-0.199423</td>
-      <td>-0.171662</td>
-    </tr>
-    <tr>
-      <th>Employees</th>
-      <td>-0.134646</td>
-      <td>0.245244</td>
-      <td>0.276777</td>
-      <td>-0.131381</td>
-      <td>-0.269806</td>
-      <td>-0.118196</td>
-      <td>-0.058209</td>
-      <td>0.232575</td>
-      <td>0.055114</td>
-      <td>0.078574</td>
-      <td>0.143632</td>
-    </tr>
-    <tr>
-      <th>Enterpreneurs</th>
-      <td>-0.330366</td>
-      <td>0.405183</td>
-      <td>0.318843</td>
-      <td>-0.203303</td>
-      <td>-0.270776</td>
-      <td>-0.212407</td>
-      <td>-0.014486</td>
-      <td>0.385660</td>
-      <td>0.150077</td>
-      <td>0.099264</td>
-      <td>0.101791</td>
-    </tr>
-    <tr>
-      <th>Unemployed</th>
-      <td>0.155623</td>
-      <td>-0.270931</td>
-      <td>-0.212106</td>
-      <td>0.312336</td>
-      <td>0.241618</td>
-      <td>0.031467</td>
-      <td>-0.049097</td>
-      <td>-0.237762</td>
-      <td>-0.102341</td>
-      <td>-0.064751</td>
-      <td>-0.067057</td>
-    </tr>
-    <tr>
-      <th>Retired</th>
-      <td>0.124068</td>
-      <td>-0.174787</td>
-      <td>-0.240309</td>
-      <td>-0.038341</td>
-      <td>0.223969</td>
-      <td>0.196440</td>
-      <td>0.091310</td>
-      <td>-0.197837</td>
-      <td>-0.031299</td>
-      <td>-0.104194</td>
-      <td>-0.123317</td>
-    </tr>
-  </tbody>
+<table class="dataframe table table-sm table-striped" data-border="1">
+<thead>
+<tr class="header">
+<th></th>
+<th>ANO</th>
+<th>ODS</th>
+<th>TOP09</th>
+<th>SPD</th>
+<th>KSČM</th>
+<th>ČSSD</th>
+<th>KDU</th>
+<th>Piráti</th>
+<th>STAN</th>
+<th>Zelení</th>
+<th>Svobodní</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th>Men</th>
+<td>0.041093</td>
+<td>-0.060295</td>
+<td>-0.056719</td>
+<td>0.056423</td>
+<td>0.077569</td>
+<td>-0.056563</td>
+<td>0.005917</td>
+<td>-0.106459</td>
+<td>0.043754</td>
+<td>-0.093035</td>
+<td>-0.023903</td>
+</tr>
+<tr class="even">
+<th>Divorced</th>
+<td>0.026135</td>
+<td>0.077424</td>
+<td>0.163635</td>
+<td>0.110595</td>
+<td>-0.039317</td>
+<td>-0.036474</td>
+<td>-0.376418</td>
+<td>0.153778</td>
+<td>-0.074612</td>
+<td>0.169291</td>
+<td>0.073551</td>
+</tr>
+<tr class="odd">
+<th>Children</th>
+<td>0.034524</td>
+<td>-0.027001</td>
+<td>-0.061479</td>
+<td>0.093404</td>
+<td>-0.022018</td>
+<td>-0.086778</td>
+<td>0.036371</td>
+<td>-0.086571</td>
+<td>0.069653</td>
+<td>-0.064333</td>
+<td>-0.013907</td>
+</tr>
+<tr class="even">
+<th>Pensioners</th>
+<td>-0.022401</td>
+<td>-0.003415</td>
+<td>-0.071983</td>
+<td>-0.150424</td>
+<td>0.081557</td>
+<td>0.138584</td>
+<td>0.087908</td>
+<td>0.008118</td>
+<td>-0.022076</td>
+<td>-0.005738</td>
+<td>-0.052158</td>
+</tr>
+<tr class="odd">
+<th>Catholic</th>
+<td>-0.159647</td>
+<td>-0.176227</td>
+<td>-0.214413</td>
+<td>-0.037560</td>
+<td>-0.033460</td>
+<td>0.135655</td>
+<td>0.772638</td>
+<td>-0.173483</td>
+<td>-0.091907</td>
+<td>-0.121956</td>
+<td>-0.076574</td>
+</tr>
+<tr class="even">
+<th>Roma</th>
+<td>-0.009232</td>
+<td>-0.024944</td>
+<td>-0.023842</td>
+<td>0.000987</td>
+<td>0.095163</td>
+<td>0.022344</td>
+<td>-0.031583</td>
+<td>-0.018851</td>
+<td>-0.012162</td>
+<td>0.013135</td>
+<td>-0.003160</td>
+</tr>
+<tr class="odd">
+<th>University</th>
+<td>-0.377577</td>
+<td>0.484473</td>
+<td>0.449711</td>
+<td>-0.316076</td>
+<td>-0.405961</td>
+<td>-0.128071</td>
+<td>-0.001044</td>
+<td>0.603053</td>
+<td>-0.041547</td>
+<td>0.309264</td>
+<td>0.188474</td>
+</tr>
+<tr class="even">
+<th>Vocational</th>
+<td>-0.243306</td>
+<td>0.274207</td>
+<td>0.312683</td>
+<td>-0.205852</td>
+<td>-0.236990</td>
+<td>-0.070846</td>
+<td>-0.026492</td>
+<td>0.346914</td>
+<td>0.029837</td>
+<td>0.164134</td>
+<td>0.112741</td>
+</tr>
+<tr class="odd">
+<th>Extended high school</th>
+<td>-0.133087</td>
+<td>0.243706</td>
+<td>0.216965</td>
+<td>-0.168482</td>
+<td>-0.231511</td>
+<td>-0.024863</td>
+<td>-0.047736</td>
+<td>0.257751</td>
+<td>0.004995</td>
+<td>0.153460</td>
+<td>0.099864</td>
+</tr>
+<tr class="even">
+<th>High school with maturita</th>
+<td>-0.185962</td>
+<td>0.358873</td>
+<td>0.334843</td>
+<td>-0.246670</td>
+<td>-0.351982</td>
+<td>-0.072048</td>
+<td>-0.033789</td>
+<td>0.341346</td>
+<td>0.013866</td>
+<td>0.166509</td>
+<td>0.152538</td>
+</tr>
+<tr class="odd">
+<th>High school without maturita</th>
+<td>0.337919</td>
+<td>-0.453015</td>
+<td>-0.425833</td>
+<td>0.249080</td>
+<td>0.376581</td>
+<td>0.146026</td>
+<td>0.072947</td>
+<td>-0.549818</td>
+<td>0.023435</td>
+<td>-0.318216</td>
+<td>-0.182123</td>
+</tr>
+<tr class="even">
+<th>Elementary school</th>
+<td>0.246680</td>
+<td>-0.416512</td>
+<td>-0.402878</td>
+<td>0.268286</td>
+<td>0.398431</td>
+<td>0.146079</td>
+<td>0.063060</td>
+<td>-0.461539</td>
+<td>-0.046621</td>
+<td>-0.199423</td>
+<td>-0.171662</td>
+</tr>
+<tr class="odd">
+<th>Employees</th>
+<td>-0.134646</td>
+<td>0.245244</td>
+<td>0.276777</td>
+<td>-0.131381</td>
+<td>-0.269806</td>
+<td>-0.118196</td>
+<td>-0.058209</td>
+<td>0.232575</td>
+<td>0.055114</td>
+<td>0.078574</td>
+<td>0.143632</td>
+</tr>
+<tr class="even">
+<th>Enterpreneurs</th>
+<td>-0.330366</td>
+<td>0.405183</td>
+<td>0.318843</td>
+<td>-0.203303</td>
+<td>-0.270776</td>
+<td>-0.212407</td>
+<td>-0.014486</td>
+<td>0.385660</td>
+<td>0.150077</td>
+<td>0.099264</td>
+<td>0.101791</td>
+</tr>
+<tr class="odd">
+<th>Unemployed</th>
+<td>0.155623</td>
+<td>-0.270931</td>
+<td>-0.212106</td>
+<td>0.312336</td>
+<td>0.241618</td>
+<td>0.031467</td>
+<td>-0.049097</td>
+<td>-0.237762</td>
+<td>-0.102341</td>
+<td>-0.064751</td>
+<td>-0.067057</td>
+</tr>
+<tr class="even">
+<th>Retired</th>
+<td>0.124068</td>
+<td>-0.174787</td>
+<td>-0.240309</td>
+<td>-0.038341</td>
+<td>0.223969</td>
+<td>0.196440</td>
+<td>0.091310</td>
+<td>-0.197837</td>
+<td>-0.031299</td>
+<td>-0.104194</td>
+<td>-0.123317</td>
+</tr>
+</tbody>
 </table>
-</div>
 </div>
 </div>
 <p>Clearly ANO’s support is negatively correlated with higher education and income (employees and enterpreneurs) and positively with lower education and having income from the state (pensioners and unemployed).</p>
@@ -450,220 +510,216 @@ ul.task-list li input[type="checkbox"] {
 <p>Now let’s continue with 2021 elections.</p>
 <div class="cell" data-execution_count="13">
 <div class="cell-output cell-output-display" data-execution_count="13">
-
-<div>
-
-<table class="dataframe table table-sm table-striped">
-  <thead>
-    <tr>
-      <th></th>
-      <th>ANO</th>
-      <th>SPOLU</th>
-      <th>SPD</th>
-      <th>PirSTAN</th>
-      <th>Přísaha</th>
-      <th>ČSSD</th>
-      <th>KSČM</th>
-      <th>Zelení</th>
-      <th>Trikolora</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Men</th>
-      <td>0.026442</td>
-      <td>-0.068907</td>
-      <td>0.086952</td>
-      <td>-0.041088</td>
-      <td>0.023864</td>
-      <td>-0.022391</td>
-      <td>0.059202</td>
-      <td>-0.032694</td>
-      <td>0.015399</td>
-    </tr>
-    <tr>
-      <th>Divorced</th>
-      <td>0.051146</td>
-      <td>-0.102858</td>
-      <td>0.063883</td>
-      <td>0.154745</td>
-      <td>-0.072731</td>
-      <td>-0.147241</td>
-      <td>-0.081795</td>
-      <td>0.092365</td>
-      <td>0.020627</td>
-    </tr>
-    <tr>
-      <th>Children</th>
-      <td>-0.047361</td>
-      <td>-0.004362</td>
-      <td>0.120553</td>
-      <td>-0.025443</td>
-      <td>0.041022</td>
-      <td>-0.066177</td>
-      <td>-0.042625</td>
-      <td>0.034565</td>
-      <td>0.053823</td>
-    </tr>
-    <tr>
-      <th>Pensioners</th>
-      <td>0.046547</td>
-      <td>0.019090</td>
-      <td>-0.139951</td>
-      <td>-0.044650</td>
-      <td>-0.048747</td>
-      <td>0.118913</td>
-      <td>0.105669</td>
-      <td>-0.010254</td>
-      <td>-0.048607</td>
-    </tr>
-    <tr>
-      <th>Catholic</th>
-      <td>-0.081730</td>
-      <td>0.170040</td>
-      <td>-0.045735</td>
-      <td>-0.211783</td>
-      <td>0.041864</td>
-      <td>0.185555</td>
-      <td>0.020257</td>
-      <td>-0.110193</td>
-      <td>-0.026481</td>
-    </tr>
-    <tr>
-      <th>Roma</th>
-      <td>0.013006</td>
-      <td>-0.052567</td>
-      <td>0.006285</td>
-      <td>0.044363</td>
-      <td>-0.016218</td>
-      <td>0.010726</td>
-      <td>0.013283</td>
-      <td>0.064553</td>
-      <td>-0.013481</td>
-    </tr>
-    <tr>
-      <th>University</th>
-      <td>-0.452431</td>
-      <td>0.545203</td>
-      <td>-0.407685</td>
-      <td>0.449300</td>
-      <td>-0.139666</td>
-      <td>-0.125068</td>
-      <td>-0.319709</td>
-      <td>0.010293</td>
-      <td>0.002132</td>
-    </tr>
-    <tr>
-      <th>Vocational</th>
-      <td>-0.295502</td>
-      <td>0.319039</td>
-      <td>-0.274051</td>
-      <td>0.299782</td>
-      <td>-0.060876</td>
-      <td>-0.042067</td>
-      <td>-0.178327</td>
-      <td>0.002065</td>
-      <td>0.012855</td>
-    </tr>
-    <tr>
-      <th>Extended high school</th>
-      <td>-0.193292</td>
-      <td>0.235047</td>
-      <td>-0.229957</td>
-      <td>0.231306</td>
-      <td>-0.045859</td>
-      <td>-0.033726</td>
-      <td>-0.166958</td>
-      <td>0.025733</td>
-      <td>0.026780</td>
-    </tr>
-    <tr>
-      <th>High school with maturita</th>
-      <td>-0.298261</td>
-      <td>0.381081</td>
-      <td>-0.324757</td>
-      <td>0.308247</td>
-      <td>-0.046757</td>
-      <td>-0.038372</td>
-      <td>-0.262716</td>
-      <td>-0.018982</td>
-      <td>0.007538</td>
-    </tr>
-    <tr>
-      <th>High school without maturita</th>
-      <td>0.401549</td>
-      <td>-0.463490</td>
-      <td>0.336282</td>
-      <td>-0.452142</td>
-      <td>0.154256</td>
-      <td>0.171226</td>
-      <td>0.316410</td>
-      <td>-0.056857</td>
-      <td>-0.015067</td>
-    </tr>
-    <tr>
-      <th>Elementary school</th>
-      <td>0.401381</td>
-      <td>-0.456651</td>
-      <td>0.328679</td>
-      <td>-0.382403</td>
-      <td>0.051364</td>
-      <td>0.098466</td>
-      <td>0.303501</td>
-      <td>0.005037</td>
-      <td>-0.025812</td>
-    </tr>
-    <tr>
-      <th>Employees</th>
-      <td>-0.254452</td>
-      <td>0.280439</td>
-      <td>-0.180576</td>
-      <td>0.206558</td>
-      <td>0.036389</td>
-      <td>-0.046122</td>
-      <td>-0.216504</td>
-      <td>-0.038122</td>
-      <td>0.043512</td>
-    </tr>
-    <tr>
-      <th>Enterpreneurs</th>
-      <td>-0.392238</td>
-      <td>0.421382</td>
-      <td>-0.270981</td>
-      <td>0.316712</td>
-      <td>-0.058372</td>
-      <td>-0.124447</td>
-      <td>-0.200673</td>
-      <td>-0.027387</td>
-      <td>0.045785</td>
-    </tr>
-    <tr>
-      <th>Unemployed</th>
-      <td>0.270456</td>
-      <td>-0.341239</td>
-      <td>0.329921</td>
-      <td>-0.195133</td>
-      <td>0.006373</td>
-      <td>-0.066018</td>
-      <td>0.146726</td>
-      <td>0.017800</td>
-      <td>-0.028393</td>
-    </tr>
-    <tr>
-      <th>Retired</th>
-      <td>0.228655</td>
-      <td>-0.176274</td>
-      <td>-0.004193</td>
-      <td>-0.212952</td>
-      <td>-0.010014</td>
-      <td>0.169345</td>
-      <td>0.220622</td>
-      <td>-0.020482</td>
-      <td>-0.061793</td>
-    </tr>
-  </tbody>
+<table class="dataframe table table-sm table-striped" data-border="1">
+<thead>
+<tr class="header">
+<th></th>
+<th>ANO</th>
+<th>SPOLU</th>
+<th>SPD</th>
+<th>PirSTAN</th>
+<th>Přísaha</th>
+<th>ČSSD</th>
+<th>KSČM</th>
+<th>Zelení</th>
+<th>Trikolora</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th>Men</th>
+<td>0.026442</td>
+<td>-0.068907</td>
+<td>0.086952</td>
+<td>-0.041088</td>
+<td>0.023864</td>
+<td>-0.022391</td>
+<td>0.059202</td>
+<td>-0.032694</td>
+<td>0.015399</td>
+</tr>
+<tr class="even">
+<th>Divorced</th>
+<td>0.051146</td>
+<td>-0.102858</td>
+<td>0.063883</td>
+<td>0.154745</td>
+<td>-0.072731</td>
+<td>-0.147241</td>
+<td>-0.081795</td>
+<td>0.092365</td>
+<td>0.020627</td>
+</tr>
+<tr class="odd">
+<th>Children</th>
+<td>-0.047361</td>
+<td>-0.004362</td>
+<td>0.120553</td>
+<td>-0.025443</td>
+<td>0.041022</td>
+<td>-0.066177</td>
+<td>-0.042625</td>
+<td>0.034565</td>
+<td>0.053823</td>
+</tr>
+<tr class="even">
+<th>Pensioners</th>
+<td>0.046547</td>
+<td>0.019090</td>
+<td>-0.139951</td>
+<td>-0.044650</td>
+<td>-0.048747</td>
+<td>0.118913</td>
+<td>0.105669</td>
+<td>-0.010254</td>
+<td>-0.048607</td>
+</tr>
+<tr class="odd">
+<th>Catholic</th>
+<td>-0.081730</td>
+<td>0.170040</td>
+<td>-0.045735</td>
+<td>-0.211783</td>
+<td>0.041864</td>
+<td>0.185555</td>
+<td>0.020257</td>
+<td>-0.110193</td>
+<td>-0.026481</td>
+</tr>
+<tr class="even">
+<th>Roma</th>
+<td>0.013006</td>
+<td>-0.052567</td>
+<td>0.006285</td>
+<td>0.044363</td>
+<td>-0.016218</td>
+<td>0.010726</td>
+<td>0.013283</td>
+<td>0.064553</td>
+<td>-0.013481</td>
+</tr>
+<tr class="odd">
+<th>University</th>
+<td>-0.452431</td>
+<td>0.545203</td>
+<td>-0.407685</td>
+<td>0.449300</td>
+<td>-0.139666</td>
+<td>-0.125068</td>
+<td>-0.319709</td>
+<td>0.010293</td>
+<td>0.002132</td>
+</tr>
+<tr class="even">
+<th>Vocational</th>
+<td>-0.295502</td>
+<td>0.319039</td>
+<td>-0.274051</td>
+<td>0.299782</td>
+<td>-0.060876</td>
+<td>-0.042067</td>
+<td>-0.178327</td>
+<td>0.002065</td>
+<td>0.012855</td>
+</tr>
+<tr class="odd">
+<th>Extended high school</th>
+<td>-0.193292</td>
+<td>0.235047</td>
+<td>-0.229957</td>
+<td>0.231306</td>
+<td>-0.045859</td>
+<td>-0.033726</td>
+<td>-0.166958</td>
+<td>0.025733</td>
+<td>0.026780</td>
+</tr>
+<tr class="even">
+<th>High school with maturita</th>
+<td>-0.298261</td>
+<td>0.381081</td>
+<td>-0.324757</td>
+<td>0.308247</td>
+<td>-0.046757</td>
+<td>-0.038372</td>
+<td>-0.262716</td>
+<td>-0.018982</td>
+<td>0.007538</td>
+</tr>
+<tr class="odd">
+<th>High school without maturita</th>
+<td>0.401549</td>
+<td>-0.463490</td>
+<td>0.336282</td>
+<td>-0.452142</td>
+<td>0.154256</td>
+<td>0.171226</td>
+<td>0.316410</td>
+<td>-0.056857</td>
+<td>-0.015067</td>
+</tr>
+<tr class="even">
+<th>Elementary school</th>
+<td>0.401381</td>
+<td>-0.456651</td>
+<td>0.328679</td>
+<td>-0.382403</td>
+<td>0.051364</td>
+<td>0.098466</td>
+<td>0.303501</td>
+<td>0.005037</td>
+<td>-0.025812</td>
+</tr>
+<tr class="odd">
+<th>Employees</th>
+<td>-0.254452</td>
+<td>0.280439</td>
+<td>-0.180576</td>
+<td>0.206558</td>
+<td>0.036389</td>
+<td>-0.046122</td>
+<td>-0.216504</td>
+<td>-0.038122</td>
+<td>0.043512</td>
+</tr>
+<tr class="even">
+<th>Enterpreneurs</th>
+<td>-0.392238</td>
+<td>0.421382</td>
+<td>-0.270981</td>
+<td>0.316712</td>
+<td>-0.058372</td>
+<td>-0.124447</td>
+<td>-0.200673</td>
+<td>-0.027387</td>
+<td>0.045785</td>
+</tr>
+<tr class="odd">
+<th>Unemployed</th>
+<td>0.270456</td>
+<td>-0.341239</td>
+<td>0.329921</td>
+<td>-0.195133</td>
+<td>0.006373</td>
+<td>-0.066018</td>
+<td>0.146726</td>
+<td>0.017800</td>
+<td>-0.028393</td>
+</tr>
+<tr class="even">
+<th>Retired</th>
+<td>0.228655</td>
+<td>-0.176274</td>
+<td>-0.004193</td>
+<td>-0.212952</td>
+<td>-0.010014</td>
+<td>0.169345</td>
+<td>0.220622</td>
+<td>-0.020482</td>
+<td>-0.061793</td>
+</tr>
+</tbody>
 </table>
-</div>
 </div>
 </div>
 <p>The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.</p>
@@ -671,6 +727,40 @@ ul.task-list li input[type="checkbox"] {
 <p>Other things to note are the correlations with Roma population, it’s strongest with Zelení and PirSTAN.</p>
 </section>
 </section>
+</section>
+<section id="modelling" class="level1">
+<h1>Modelling</h1>
+<p>Our goal is to predict electoral results in 2021 given sociodemographic data and results of previous elections. This task can be viewed as multinomial regression with additional constraints, the predicted vectors must sum to 1 and be non-negative. This is however somewhat hard because some capacity of the model will have to be used on learning these constraints.</p>
+<p>First method that was used was k-nearest neighbors for regression. Its advantage is, that it will keep the constraints without any further modifications. Second method used multinomial linear regression. Unfortunately in this case the predicted “distributions” of votes were not guaranteed to be a distribution since the sum of the outputs is not constrained to be 1. Last method used, with little success, were neural networks described in more detail later.</p>
+<p>All models were evaulated using average of mean square errors of produced and original “distributions”. Original idea was to use KL-Divergence as that is a better measure of similarity between two distributions but it would require further pre-processing to remove all 0’s from the dataset by Laplace smoothing.</p>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Each model was evaluated on multiple datasets:</p>
+<ul>
+<li>education data only (<code>education</code>)</li>
+<li>previous elections only (<code>elections</code>)</li>
+<li>employment status only (<code>employment</code>)</li>
+<li>all of the above + miscelaneous data such as percentage of catholics, roma population, percentage of divorced, etc. (<code>full</code>)</li>
+</ul>
+<p>All spliting of the dataset was done in a stratified manner based on regions. In simple terms, both test and train datasets would contain similar percentages of districts from each region. This should make the models better since each region has its specifics and this way the model will be able to incorporate all of them.</p>
+<p>Before training the models, the dataset was normalised using the <code>StandardScaler</code> from scikit learn library and trained on the “train” part of the dataset so that all the datapoints are from a <span class="math inline">\(N(0,I)\)</span> distribution.</p>
+</section>
+<section id="k-nearest-neigbors" class="level2">
+<h2 class="anchored" data-anchor-id="k-nearest-neigbors">K-Nearest Neigbors</h2>
+<p>K-Nearest Neighbors regressor is an non-parametric model which makes predictions by taking values assigned to k nearest data points and simply averages them.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plot_knn_res()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="linear-models">Linear Models</h2>
+</section>
+<section id="neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks">Neural Networks</h2>
+<p>Since the previous method was not able to exploit the constraints (non-negativity, sum 1) we decided to use custom neural network. The idea was to make a simple neural network (just one hidden layer) and pass the result into a softmax layer which would make the output into a distribution. And since neural networks learn using the gradient of loss it would learn from the data and no capacity of the model would be used on learning the two contraints. At least that was the theory. Unfortunately, due to a bad network desing or a bug in the code caused by inexperience with PyTorch and PyTorch Lightning. The remains of this attempt can be viewed in the supplementary notebook.</p>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Another would be to spend more time with neural networks to get some reasonable result out of them.</p>
 </section>
 
 </main>

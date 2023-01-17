@@ -7,3 +7,4 @@ seaborn
 torch
 pytorch-lightning
 scikit-learn
+scipy

@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.107">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Michal Pospěch">
+
+<title>NDBI048 - GeoData - EDA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="report_files/libs/clipboard/clipboard.min.js"></script>
+<script src="report_files/libs/quarto-html/quarto.js"></script>
+<script src="report_files/libs/quarto-html/popper.min.js"></script>
+<script src="report_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="report_files/libs/quarto-html/anchor.min.js"></script>
+<link href="report_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="report_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="report_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="report_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="report_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">NDBI048 - <code>GeoData</code> - EDA</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Michal Pospěch </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
+<p>This document analyses data from the “Geodata” dataset. As the dataset is somewhat large, only its subset regarding election results and sociodemographic indicators will be analysed and used further with focus on modeling parlimentary election results from - past parlimentary election results and - sociodemographic data.</p>
+</section>
+<section id="dataset" class="level1">
+<h1>Dataset</h1>
+<p>This dataset contains election-district level sociodemographic data and election results. Fortunately the dataset is complete and contains no duplicities in data thus no cleaning has to be done. The dataset contains 14271 rows and 51 columns, each row representing one electoral district.</p>
+<section id="columns" class="level2">
+<h2 class="anchored" data-anchor-id="columns">Columns</h2>
+<p>Meaning of each column is described in the provided file and is as follows:</p>
+<ul>
+<li><code>obec_okrsek</code> - district and municipality code, is unique and is used as index</li>
+<li><code>obec</code> - municipality (LAU2) code</li>
+<li><code>okres</code> - county (LAU1)</li>
+<li><code>kraj</code> - region (NUTS3)</li>
+<li><code>vel.obce</code> - number of inhabitants</li>
+<li><code>par{21,17}vsezn</code> - Parlimentary elections 2021/17, number of votes from the “electoral list”</li>
+<li><code>par{21,17}phcelkem</code> - Parlimentary elections 2021/17, number of votes in district</li>
+<li><code>par{21,17}*</code> - Parlimentary elections 2021/17, number of votes for a particular party</li>
+<li><code>prez18zem2</code> - Presidential elections 2018, 2nd round, number of votes for M. Zeman</li>
+<li><code>prez18dra2</code> - Presidential elections 2018, 2nd round, number of votes for J. Drahos</li>
+<li><code>nazev_obce</code> - municipality name</li>
+<li><code>nazev.pha</code> - city name (same as <code>nazev_obce</code> for non-statutary cities)</li>
+<li><code>sl11obyvatel</code> - Census 2011, number of inhabitants</li>
+<li><code>sl11muzi</code> - Census 2011, number of men</li>
+<li><code>sl11rozv</code> - Census 2011, divorced</li>
+<li><code>sl11deti</code> - Census 2011, children</li>
+<li><code>sl11seni</code> - Census 2011, pensioners</li>
+<li><code>sl11kat</code> - Census 2011, catholics</li>
+<li><code>sl11rom</code> - Census 2011, roma</li>
+<li><code>sl11vs</code> - Census 2011, university education</li>
+<li><code>sl11vos</code> - Census 2011, vocational school</li>
+<li><code>sl11nast</code> - Census 2011, extended high school</li>
+<li><code>sl11strm</code> - Census 2011, high school with maturita</li>
+<li><code>sl11strb</code> - Census 2011, high school without maturita</li>
+<li><code>sl11zakl</code> - Census 2011, elementary school</li>
+<li><code>sl11zam</code> - Census 2011, employed</li>
+<li><code>sl11pod</code> - Census 2011, enterpreneur</li>
+<li><code>sl11nezam</code> - Census 2011, unemployed</li>
+<li><code>sl11neprduch</code> - Census 2011, non-working pensioners (retired)</li>
+<li><code>sl11budov</code> - Census 2011, number of buildings</li>
+</ul>
+</section>
+<section id="feature-extraction" class="level2">
+<h2 class="anchored" data-anchor-id="feature-extraction">Feature Extraction</h2>
+<p>Unfortunately all the values are absolute meaning that any model applied to the dataset would predict that in big districs parties tend to get more votes. Thus transforming all the values to ratios of total population in the district was needed. Also the number of women was not provided and had to be calculated as <code>total</code> - <code>men</code>.</p>
+</section>
+<section id="exploration" class="level2">
+<h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
+<p>We start with exploring the various sociodemogaphic indicators provided.</p>
+<div class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<p><img src="report_files/figure-html/cell-3-output-1.png" width="654" height="465"></p>
+</div>
+</div>
+<p>The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.</p>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="3">
+<p><img src="report_files/figure-html/cell-4-output-1.png" width="656" height="465"></p>
+</div>
+</div>
+<p>One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.</p>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="4">
+<p><img src="report_files/figure-html/cell-5-output-1.png" width="657" height="465"></p>
+</div>
+</div>
+<p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have only high school education while just over 10% have a university degree.</p>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="5">
+<p><img src="report_files/figure-html/cell-6-output-1.png" width="656" height="465"></p>
+</div>
+</div>
+<p>It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.</p>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<p><img src="report_files/figure-html/cell-7-output-1.png" width="656" height="465"></p>
+</div>
+</div>
+<p>In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.</p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<p><img src="report_files/figure-html/cell-8-output-1.png" width="657" height="465"></p>
+</div>
+</div>
+<p>In 2021 ANO won the elections as well, however with much smaller margin only 4 parties (and coallitions) got into the Chamber of Deputies.</p>
+<section id="relationships" class="level3">
+<h3 class="anchored" data-anchor-id="relationships">Relationships</h3>
+<p>To understand election results better let’s explore how they relate to other variables. First, let’s explore how does size of municipality influence election results.</p>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<p><img src="report_files/figure-html/cell-9-output-1.png" width="789" height="465"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<p><img src="report_files/figure-html/cell-10-output-1.png" width="783" height="465"></p>
+</div>
+</div>
+<p>Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) do disproportionately well in bigger cities.</p>
+<p>To gain more insight into this result, let’s see how does the size of municipality relate to education and employment distribution.</p>
+<div class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="10">
+<p><img src="report_files/figure-html/cell-11-output-1.png" width="835" height="465"></p>
+</div>
+</div>
+<p>Clearly, the distribution of employment does not vary very much between different sizes of municipalities.</p>
+<div class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="11">
+<p><img src="report_files/figure-html/cell-12-output-1.png" width="853" height="465"></p>
+</div>
+</div>
+<p>Education varies heavily based on municipality size with university-educated people making up almost 20% of inhabitants of big cities while making up less than 5% of small village population.</p>
+<p>Now, let’s explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.</p>
+<p>First we explore the 2017 elections.</p>
+<div class="cell" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="12">
+<table class="dataframe table table-sm table-striped" data-border="1">
+<thead>
+<tr class="header">
+<th></th>
+<th>ANO</th>
+<th>ODS</th>
+<th>TOP09</th>
+<th>SPD</th>
+<th>KSČM</th>
+<th>ČSSD</th>
+<th>KDU</th>
+<th>Piráti</th>
+<th>STAN</th>
+<th>Zelení</th>
+<th>Svobodní</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th>Men</th>
+<td>0.041093</td>
+<td>-0.060295</td>
+<td>-0.056719</td>
+<td>0.056423</td>
+<td>0.077569</td>
+<td>-0.056563</td>
+<td>0.005917</td>
+<td>-0.106459</td>
+<td>0.043754</td>
+<td>-0.093035</td>
+<td>-0.023903</td>
+</tr>
+<tr class="even">
+<th>Divorced</th>
+<td>0.026135</td>
+<td>0.077424</td>
+<td>0.163635</td>
+<td>0.110595</td>
+<td>-0.039317</td>
+<td>-0.036474</td>
+<td>-0.376418</td>
+<td>0.153778</td>
+<td>-0.074612</td>
+<td>0.169291</td>
+<td>0.073551</td>
+</tr>
+<tr class="odd">
+<th>Children</th>
+<td>0.034524</td>
+<td>-0.027001</td>
+<td>-0.061479</td>
+<td>0.093404</td>
+<td>-0.022018</td>
+<td>-0.086778</td>
+<td>0.036371</td>
+<td>-0.086571</td>
+<td>0.069653</td>
+<td>-0.064333</td>
+<td>-0.013907</td>
+</tr>
+<tr class="even">
+<th>Pensioners</th>
+<td>-0.022401</td>
+<td>-0.003415</td>
+<td>-0.071983</td>
+<td>-0.150424</td>
+<td>0.081557</td>
+<td>0.138584</td>
+<td>0.087908</td>
+<td>0.008118</td>
+<td>-0.022076</td>
+<td>-0.005738</td>
+<td>-0.052158</td>
+</tr>
+<tr class="odd">
+<th>Catholic</th>
+<td>-0.159647</td>
+<td>-0.176227</td>
+<td>-0.214413</td>
+<td>-0.037560</td>
+<td>-0.033460</td>
+<td>0.135655</td>
+<td>0.772638</td>
+<td>-0.173483</td>
+<td>-0.091907</td>
+<td>-0.121956</td>
+<td>-0.076574</td>
+</tr>
+<tr class="even">
+<th>Roma</th>
+<td>-0.009232</td>
+<td>-0.024944</td>
+<td>-0.023842</td>
+<td>0.000987</td>
+<td>0.095163</td>
+<td>0.022344</td>
+<td>-0.031583</td>
+<td>-0.018851</td>
+<td>-0.012162</td>
+<td>0.013135</td>
+<td>-0.003160</td>
+</tr>
+<tr class="odd">
+<th>University</th>
+<td>-0.377577</td>
+<td>0.484473</td>
+<td>0.449711</td>
+<td>-0.316076</td>
+<td>-0.405961</td>
+<td>-0.128071</td>
+<td>-0.001044</td>
+<td>0.603053</td>
+<td>-0.041547</td>
+<td>0.309264</td>
+<td>0.188474</td>
+</tr>
+<tr class="even">
+<th>Vocational</th>
+<td>-0.243306</td>
+<td>0.274207</td>
+<td>0.312683</td>
+<td>-0.205852</td>
+<td>-0.236990</td>
+<td>-0.070846</td>
+<td>-0.026492</td>
+<td>0.346914</td>
+<td>0.029837</td>
+<td>0.164134</td>
+<td>0.112741</td>
+</tr>
+<tr class="odd">
+<th>Extended high school</th>
+<td>-0.133087</td>
+<td>0.243706</td>
+<td>0.216965</td>
+<td>-0.168482</td>
+<td>-0.231511</td>
+<td>-0.024863</td>
+<td>-0.047736</td>
+<td>0.257751</td>
+<td>0.004995</td>
+<td>0.153460</td>
+<td>0.099864</td>
+</tr>
+<tr class="even">
+<th>High school with maturita</th>
+<td>-0.185962</td>
+<td>0.358873</td>
+<td>0.334843</td>
+<td>-0.246670</td>
+<td>-0.351982</td>
+<td>-0.072048</td>
+<td>-0.033789</td>
+<td>0.341346</td>
+<td>0.013866</td>
+<td>0.166509</td>
+<td>0.152538</td>
+</tr>
+<tr class="odd">
+<th>High school without maturita</th>
+<td>0.337919</td>
+<td>-0.453015</td>
+<td>-0.425833</td>
+<td>0.249080</td>
+<td>0.376581</td>
+<td>0.146026</td>
+<td>0.072947</td>
+<td>-0.549818</td>
+<td>0.023435</td>
+<td>-0.318216</td>
+<td>-0.182123</td>
+</tr>
+<tr class="even">
+<th>Elementary school</th>
+<td>0.246680</td>
+<td>-0.416512</td>
+<td>-0.402878</td>
+<td>0.268286</td>
+<td>0.398431</td>
+<td>0.146079</td>
+<td>0.063060</td>
+<td>-0.461539</td>
+<td>-0.046621</td>
+<td>-0.199423</td>
+<td>-0.171662</td>
+</tr>
+<tr class="odd">
+<th>Employees</th>
+<td>-0.134646</td>
+<td>0.245244</td>
+<td>0.276777</td>
+<td>-0.131381</td>
+<td>-0.269806</td>
+<td>-0.118196</td>
+<td>-0.058209</td>
+<td>0.232575</td>
+<td>0.055114</td>
+<td>0.078574</td>
+<td>0.143632</td>
+</tr>
+<tr class="even">
+<th>Enterpreneurs</th>
+<td>-0.330366</td>
+<td>0.405183</td>
+<td>0.318843</td>
+<td>-0.203303</td>
+<td>-0.270776</td>
+<td>-0.212407</td>
+<td>-0.014486</td>
+<td>0.385660</td>
+<td>0.150077</td>
+<td>0.099264</td>
+<td>0.101791</td>
+</tr>
+<tr class="odd">
+<th>Unemployed</th>
+<td>0.155623</td>
+<td>-0.270931</td>
+<td>-0.212106</td>
+<td>0.312336</td>
+<td>0.241618</td>
+<td>0.031467</td>
+<td>-0.049097</td>
+<td>-0.237762</td>
+<td>-0.102341</td>
+<td>-0.064751</td>
+<td>-0.067057</td>
+</tr>
+<tr class="even">
+<th>Retired</th>
+<td>0.124068</td>
+<td>-0.174787</td>
+<td>-0.240309</td>
+<td>-0.038341</td>
+<td>0.223969</td>
+<td>0.196440</td>
+<td>0.091310</td>
+<td>-0.197837</td>
+<td>-0.031299</td>
+<td>-0.104194</td>
+<td>-0.123317</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Clearly ANO’s support is negatively correlated with higher education and income (employees and enterpreneurs) and positively with lower education and having income from the state (pensioners and unemployed).</p>
+<p>ODS has an inverse correlation profile to ANO. Its support is positively correlated with higher education and being employed or self-employed.</p>
+<p>Piráti are similar to ODS, they have extremely high positive correlation with higher education .</p>
+<p>KDU has extremely high correlation with catholics which is to be expected given their name. It also has negative correlation with divorced which is to be expected as well.</p>
+<p>SPD has strong negative correlation with higher education, and positive correlation with lower education and the unemployed.</p>
+<p>ČSSD has strong positive correlations with unemployed, retired and pensioners and slightly weaker with lower education.</p>
+<p>TOP09 has similar correlations as the Piráti do.</p>
+<p>STAN has no strong correlations.</p>
+<p>KSČM is similar to SPD and ANO, high positive correlation with lower education, unemployed and pensioners.</p>
+<hr>
+<p>Now let’s continue with 2021 elections.</p>
+<div class="cell" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="13">
+<table class="dataframe table table-sm table-striped" data-border="1">
+<thead>
+<tr class="header">
+<th></th>
+<th>ANO</th>
+<th>SPOLU</th>
+<th>SPD</th>
+<th>PirSTAN</th>
+<th>Přísaha</th>
+<th>ČSSD</th>
+<th>KSČM</th>
+<th>Zelení</th>
+<th>Trikolora</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th>Men</th>
+<td>0.026442</td>
+<td>-0.068907</td>
+<td>0.086952</td>
+<td>-0.041088</td>
+<td>0.023864</td>
+<td>-0.022391</td>
+<td>0.059202</td>
+<td>-0.032694</td>
+<td>0.015399</td>
+</tr>
+<tr class="even">
+<th>Divorced</th>
+<td>0.051146</td>
+<td>-0.102858</td>
+<td>0.063883</td>
+<td>0.154745</td>
+<td>-0.072731</td>
+<td>-0.147241</td>
+<td>-0.081795</td>
+<td>0.092365</td>
+<td>0.020627</td>
+</tr>
+<tr class="odd">
+<th>Children</th>
+<td>-0.047361</td>
+<td>-0.004362</td>
+<td>0.120553</td>
+<td>-0.025443</td>
+<td>0.041022</td>
+<td>-0.066177</td>
+<td>-0.042625</td>
+<td>0.034565</td>
+<td>0.053823</td>
+</tr>
+<tr class="even">
+<th>Pensioners</th>
+<td>0.046547</td>
+<td>0.019090</td>
+<td>-0.139951</td>
+<td>-0.044650</td>
+<td>-0.048747</td>
+<td>0.118913</td>
+<td>0.105669</td>
+<td>-0.010254</td>
+<td>-0.048607</td>
+</tr>
+<tr class="odd">
+<th>Catholic</th>
+<td>-0.081730</td>
+<td>0.170040</td>
+<td>-0.045735</td>
+<td>-0.211783</td>
+<td>0.041864</td>
+<td>0.185555</td>
+<td>0.020257</td>
+<td>-0.110193</td>
+<td>-0.026481</td>
+</tr>
+<tr class="even">
+<th>Roma</th>
+<td>0.013006</td>
+<td>-0.052567</td>
+<td>0.006285</td>
+<td>0.044363</td>
+<td>-0.016218</td>
+<td>0.010726</td>
+<td>0.013283</td>
+<td>0.064553</td>
+<td>-0.013481</td>
+</tr>
+<tr class="odd">
+<th>University</th>
+<td>-0.452431</td>
+<td>0.545203</td>
+<td>-0.407685</td>
+<td>0.449300</td>
+<td>-0.139666</td>
+<td>-0.125068</td>
+<td>-0.319709</td>
+<td>0.010293</td>
+<td>0.002132</td>
+</tr>
+<tr class="even">
+<th>Vocational</th>
+<td>-0.295502</td>
+<td>0.319039</td>
+<td>-0.274051</td>
+<td>0.299782</td>
+<td>-0.060876</td>
+<td>-0.042067</td>
+<td>-0.178327</td>
+<td>0.002065</td>
+<td>0.012855</td>
+</tr>
+<tr class="odd">
+<th>Extended high school</th>
+<td>-0.193292</td>
+<td>0.235047</td>
+<td>-0.229957</td>
+<td>0.231306</td>
+<td>-0.045859</td>
+<td>-0.033726</td>
+<td>-0.166958</td>
+<td>0.025733</td>
+<td>0.026780</td>
+</tr>
+<tr class="even">
+<th>High school with maturita</th>
+<td>-0.298261</td>
+<td>0.381081</td>
+<td>-0.324757</td>
+<td>0.308247</td>
+<td>-0.046757</td>
+<td>-0.038372</td>
+<td>-0.262716</td>
+<td>-0.018982</td>
+<td>0.007538</td>
+</tr>
+<tr class="odd">
+<th>High school without maturita</th>
+<td>0.401549</td>
+<td>-0.463490</td>
+<td>0.336282</td>
+<td>-0.452142</td>
+<td>0.154256</td>
+<td>0.171226</td>
+<td>0.316410</td>
+<td>-0.056857</td>
+<td>-0.015067</td>
+</tr>
+<tr class="even">
+<th>Elementary school</th>
+<td>0.401381</td>
+<td>-0.456651</td>
+<td>0.328679</td>
+<td>-0.382403</td>
+<td>0.051364</td>
+<td>0.098466</td>
+<td>0.303501</td>
+<td>0.005037</td>
+<td>-0.025812</td>
+</tr>
+<tr class="odd">
+<th>Employees</th>
+<td>-0.254452</td>
+<td>0.280439</td>
+<td>-0.180576</td>
+<td>0.206558</td>
+<td>0.036389</td>
+<td>-0.046122</td>
+<td>-0.216504</td>
+<td>-0.038122</td>
+<td>0.043512</td>
+</tr>
+<tr class="even">
+<th>Enterpreneurs</th>
+<td>-0.392238</td>
+<td>0.421382</td>
+<td>-0.270981</td>
+<td>0.316712</td>
+<td>-0.058372</td>
+<td>-0.124447</td>
+<td>-0.200673</td>
+<td>-0.027387</td>
+<td>0.045785</td>
+</tr>
+<tr class="odd">
+<th>Unemployed</th>
+<td>0.270456</td>
+<td>-0.341239</td>
+<td>0.329921</td>
+<td>-0.195133</td>
+<td>0.006373</td>
+<td>-0.066018</td>
+<td>0.146726</td>
+<td>0.017800</td>
+<td>-0.028393</td>
+</tr>
+<tr class="even">
+<th>Retired</th>
+<td>0.228655</td>
+<td>-0.176274</td>
+<td>-0.004193</td>
+<td>-0.212952</td>
+<td>-0.010014</td>
+<td>0.169345</td>
+<td>0.220622</td>
+<td>-0.020482</td>
+<td>-0.061793</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The trends from previous election are mostly reinforced, ANO has positive correlation with low education, unemployed and retired, same as SPD, SPOLU (ODS + TOP09 + KDU) with high education, employees and the self-employed.</p>
+<p>PirSTAN is similar in the correlation profile to SPOLU, most significant difference is the correlation with catholics where SPOLU has not an insignificant positive correlation, most likely due to KDU being part of SPOLU and PirSTAN has strong negative correlation.</p>
+<p>Other things to note are the correlations with Roma population, it’s strongest with Zelení and PirSTAN.</p>
+</section>
+</section>
+</section>
+<section id="modelling" class="level1">
+<h1>Modelling</h1>
+<p>Our goal is to predict electoral results in 2021 given sociodemographic data and results of previous elections. This task can be viewed as multinomial regression with additional constraints, the predicted vectors must sum to 1 and be non-negative. This is however somewhat hard because some capacity of the model will have to be used on learning these constraints.</p>
+<p>First method that was used was k-nearest neighbors for regression. Its advantage is, that it will keep the constraints without any further modifications. Second method used multinomial linear regression. Unfortunately in this case the predicted “distributions” of votes were not guaranteed to be a distribution since the sum of the outputs is not constrained to be 1. Last method used, with little success, were neural networks described in more detail later.</p>
+<p>All models were evaulated using average of mean square errors of produced and original “distributions”. Original idea was to use KL-Divergence as that is a better measure of similarity between two distributions but it would require further pre-processing to remove all 0’s from the dataset by Laplace smoothing.</p>
+<section id="data" class="level2">
+<h2 class="anchored" data-anchor-id="data">Data</h2>
+<p>Each model was evaluated on multiple datasets:</p>
+<ul>
+<li>education data only (<code>education</code>)</li>
+<li>previous elections only (<code>elections</code>)</li>
+<li>employment status only (<code>employment</code>)</li>
+<li>all of the above + miscelaneous data such as percentage of catholics, roma population, percentage of divorced, etc. (<code>full</code>)</li>
+</ul>
+<p>All spliting of the dataset was done in a stratified manner based on regions. In simple terms, both test and train datasets would contain similar percentages of districts from each region. This should make the models better since each region has its specifics and this way the model will be able to incorporate all of them.</p>
+<p>Before training the models, the dataset was normalised using the <code>StandardScaler</code> from scikit learn library and trained on the “train” part of the dataset so that all the datapoints are from a <span class="math inline">\(N(0,I)\)</span> distribution.</p>
+<p>All models were evaluated using 10-fold crossvalidation.</p>
+</section>
+<section id="k-nearest-neigbors" class="level2">
+<h2 class="anchored" data-anchor-id="k-nearest-neigbors">K-Nearest Neigbors</h2>
+<p>K-Nearest Neighbors regressor is an non-parametric model which makes predictions by taking values assigned to k nearest data points and simply averages them.</p>
+<p>Implementation of kNN regressor was taken from sklearn library, namely <code>KNeighborsRegressor</code>. It was run with default parameters except for <code>n_neighbors</code> for which values from 3 to 24 were tried and the results are shown below.</p>
+<div class="cell" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="14">
+<p><img src="report_files/figure-html/cell-15-output-1.png" width="813" height="465"></p>
+</div>
+</div>
+<p>Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one government thus there’s no reason to behave differently from other similar districts.</p>
+<p>Using all the data was not as good but still a decent model. The bigger error was probably caused by so called “Curse of Dimensionality” which describes the phenomena that appear in higher dimensionality spaces. Also the additional data might have added more noise and thus made the regressor err more.</p>
+<p>Education and employment data performed similarly with education having slight edge.</p>
+</section>
+<section id="linear-model" class="level2">
+<h2 class="anchored" data-anchor-id="linear-model">Linear Model</h2>
+<p>Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely <code>MultiTaskElasticNet</code>. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms that are linear and quadratic in the learned parameters which should help make better models.</p>
+<div class="cell" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="15">
+<p><img src="report_files/figure-html/cell-16-output-1.png" width="813" height="465"></p>
+</div>
+</div>
+<p>It can be clearly seen that the model performed badly any time there was non-zero linear term. In the only interesting case with L1 ratio 0, the pattern is similar to kNN results.</p>
+</section>
+<section id="neural-networks" class="level2">
+<h2 class="anchored" data-anchor-id="neural-networks">Neural Networks</h2>
+<p>Since the previous method was not able to exploit the constraints (non-negativity, sum 1) we decided to use custom neural network. The idea was to make a simple neural network (just one hidden layer) and pass the result into a softmax layer which would make the output into a distribution. And since neural networks learn using the gradient of loss it would learn from the data and no capacity of the model would be used on learning the two contraints. At least that was the theory. Unfortunately, due to a bad network desing or a bug in the code caused by inexperience with PyTorch and PyTorch Lightning. The remains of this attempt can be viewed in the supplementary notebook.</p>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Another would be to spend more time with neural networks to get some reasonable result out of them and try to tune the hyperparameters in linear regression a bit more.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
