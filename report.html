@@ -122,37 +122,37 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="exploration">Exploration</h2>
 <p>We start with exploring the various sociodemogaphic indicators provided.</p>
 <div class="cell" data-execution_count="2">
-<div class="cell-output cell-output-display" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <p><img src="report_files/figure-html/cell-3-output-1.png" width="654" height="465"></p>
 </div>
 </div>
 <p>The total number of inhabitants described in the dataset is 9884171 with numbers of men and women being roughly equal.</p>
 <div class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display" data-execution_count="3">
+<div class="cell-output cell-output-display" data-execution_count="18">
 <p><img src="report_files/figure-html/cell-4-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>One of the factors that could be influencing political preferences of people is the size of the municipality they live in. Close to 25% of people live in a small town.</p>
 <div class="cell" data-execution_count="4">
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="19">
 <p><img src="report_files/figure-html/cell-5-output-1.png" width="657" height="465"></p>
 </div>
 </div>
 <p>Another factor influencing electoral behaviour could be the level of education. More than 50% of the population have only high school education while just over 10% have a university degree.</p>
 <div class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div class="cell-output cell-output-display" data-execution_count="20">
 <p><img src="report_files/figure-html/cell-6-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>It can be clearly seen that the population of Roma people is really low. In addition children and pensioners make more than 30% of the population.</p>
 <div class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="21">
 <p><img src="report_files/figure-html/cell-7-output-1.png" width="656" height="465"></p>
 </div>
 </div>
 <p>In 2017 ANO won the elections by a huge margin and 9 parties got more than 5% of votes and got into the Chamber of Deputies.</p>
 <div class="cell" data-execution_count="7">
-<div class="cell-output cell-output-display" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <p><img src="report_files/figure-html/cell-8-output-1.png" width="657" height="465"></p>
 </div>
 </div>
@@ -161,25 +161,25 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="relationships">Relationships</h3>
 <p>To understand election results better let’s explore how they relate to other variables. First, let’s explore how does size of municipality influence election results.</p>
 <div class="cell" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="23">
 <p><img src="report_files/figure-html/cell-9-output-1.png" width="789" height="465"></p>
 </div>
 </div>
 <div class="cell" data-execution_count="9">
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="24">
 <p><img src="report_files/figure-html/cell-10-output-1.png" width="783" height="465"></p>
 </div>
 </div>
 <p>Clearly ANO, SPD and KSCM do not do well in big cities (such as Prague) while ODS, Pirati and TOP09 (and SPOLU and PirSTAN for that matter) do disproportionately well in bigger cities.</p>
 <p>To gain more insight into this result, let’s see how does the size of municipality relate to education and employment distribution.</p>
 <div class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="25">
 <p><img src="report_files/figure-html/cell-11-output-1.png" width="835" height="465"></p>
 </div>
 </div>
 <p>Clearly, the distribution of employment does not vary very much between different sizes of municipalities.</p>
 <div class="cell" data-execution_count="11">
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <p><img src="report_files/figure-html/cell-12-output-1.png" width="853" height="465"></p>
 </div>
 </div>
@@ -187,7 +187,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Now, let’s explore how are other sociodemographic indicators connected with election results. To get insight into the relationships we will use Paerson correlation coefficients between election results and sociodemographic data. The correlation data is presented in tables below and correlations of interest are pointed out.</p>
 <p>First we explore the 2017 elections.</p>
 <div class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div class="cell-output cell-output-display" data-execution_count="27">
 <table class="dataframe table table-sm table-striped" data-border="1">
 <thead>
 <tr class="header">
@@ -446,7 +446,7 @@ ul.task-list li input[type="checkbox"] {
 <hr>
 <p>Now let’s continue with 2021 elections.</p>
 <div class="cell" data-execution_count="13">
-<div class="cell-output cell-output-display" data-execution_count="13">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <table class="dataframe table table-sm table-striped" data-border="1">
 <thead>
 <tr class="header">
@@ -688,19 +688,19 @@ ul.task-list li input[type="checkbox"] {
 <p>K-Nearest Neighbors regressor is an non-parametric model which makes predictions by taking values assigned to k nearest data points and simply averages them.</p>
 <p>Implementation of kNN regressor was taken from sklearn library, namely <code>KNeighborsRegressor</code>. It was run with default parameters except for <code>n_neighbors</code> for which values from 3 to 24 were tried and the results are shown below.</p>
 <div class="cell" data-execution_count="14">
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="29">
 <p><img src="report_files/figure-html/cell-15-output-1.png" width="813" height="465"></p>
 </div>
 </div>
-<p>Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one government thus there’s no reason to behave differently from other similar districts.</p>
+<p>Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one parlimentary cycle thus there’s no reason to behave differently from other similar districts.</p>
 <p>Using all the data was not as good but still a decent model. The bigger error was probably caused by so called “Curse of Dimensionality” which describes the phenomena that appear in higher dimensionality spaces. Also the additional data might have added more noise and thus made the regressor err more.</p>
 <p>Education and employment data performed similarly with education having slight edge.</p>
 </section>
 <section id="linear-model" class="level2">
 <h2 class="anchored" data-anchor-id="linear-model">Linear Model</h2>
-<p>Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely <code>MultiTaskElasticNet</code>. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms that are linear and quadratic in the learned parameters which should help make better models.</p>
+<p>Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely <code>MultiTaskElasticNet</code>. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms (to the loss function) that are linear and quadratic in the learned parameters which should help make better models. The model has parameter “L1 Ratio” which sets the ratio of the quadratic and linear penalty terms in the loss function.</p>
 <div class="cell" data-execution_count="15">
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div class="cell-output cell-output-display" data-execution_count="30">
 <p><img src="report_files/figure-html/cell-16-output-1.png" width="813" height="465"></p>
 </div>
 </div>
@@ -713,7 +713,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Another would be to spend more time with neural networks to get some reasonable result out of them and try to tune the hyperparameters in linear regression a bit more.</p>
+<p>In conclusion we’ve found out that eventhough some correlations between sociodemographic indicators and election results were present in the data, the data that is most useful for election prediction are the results from previous elections.</p>
+<p>And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Moreover, spending more time with neural networks to get at least a working model, maybe even try to find some NN architecture in the literature. Skipping the normalization of data or stratification of splits would probably perform worse but it would show how important these steps are. For better evaluation, as mentioned, using KL Divergence would be a good idea however that would require further processing of data.</p>
 </section>
 
 </main>

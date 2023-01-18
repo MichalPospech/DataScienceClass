@@ -1,3 +1,4 @@
 .quarto/
 /.quarto/
 logs/
+/__pycache__

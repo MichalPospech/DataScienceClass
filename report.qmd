@@ -201,7 +201,7 @@ scripts.plot_knn_res()
 ```
 
 
-Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one government thus there's no reason to behave differently from other similar districts. 
+Clearly the data from previous elections helps with the predictions. Which is not really surprising since the population, economic situation and other factors do not change that much over the course of one parlimentary cycle thus there's no reason to behave differently from other similar districts. 
 
 Using all the data was not as good but still a decent model. The bigger error was probably caused by so called "Curse of Dimensionality" which describes the phenomena that appear in higher dimensionality spaces. Also the additional data might have added more noise and thus made the regressor err more.
 
@@ -209,7 +209,7 @@ Education and employment data performed similarly with education having slight e
 
 ## Linear Model
 
-Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely `MultiTaskElasticNet`. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms that are linear and quadratic in the learned parameters which should help make better models.
+Multinomial linear regression is like normal linear regression but with more outputs. The model used in this case is taken from sklearn library, namely `MultiTaskElasticNet`. ElasticNet is a method of regularisation (constraining the learned parameters) which adds terms (to the loss function) that are linear and quadratic in the learned parameters which should help make better models. The model has parameter "L1 Ratio" which sets the ratio of the quadratic and linear penalty terms in the loss function.
 
 ```{python}
 scripts.plot_lin_res()
@@ -225,9 +225,10 @@ Since the previous method was not able to exploit the constraints (non-negativit
 
 # Summary
 
+In conclusion we've found out that eventhough some correlations between sociodemographic indicators and election results were present in the data, the data that is most useful for election prediction are the results from previous elections. 
 
 
 
-And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Another would be to spend more time with neural networks to get some reasonable result out of them and try to tune the hyperparameters in linear regression a bit more.
+And what would have helped achieve better results? First of all, more data. One of the best predictors of election results are per capita distraints and debts in given region. Another good predictor would be location of the district since districts close to one another tend to vote similarly. Moreover, spending more time with neural networks to get at least a working model, maybe even try to find some NN architecture in the literature. Skipping the normalization of data or stratification of splits would probably perform worse but it would show how important these steps are. For better evaluation, as mentioned, using KL Divergence would be a good idea however that would require further processing of data.
 
 
